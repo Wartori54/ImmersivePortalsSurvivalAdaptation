@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "III",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "imm_ptl_surv_adapt:portal_ingot"
+    }
+  },
+  "result": {
+    "item": "imm_ptl_surv_adapt:portal_block",
+    "count": 1
+  }
+}

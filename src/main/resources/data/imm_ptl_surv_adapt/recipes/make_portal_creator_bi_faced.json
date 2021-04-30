@@ -1,0 +1,20 @@
+{
+  "type": "nbtcrafting:smithing",
+  "base": {
+    "item": "imm_ptl_surv_adapt:portal_creator_one_way",
+    "data": {
+      "require": {
+        "BiFaced": false
+      }
+    }
+  },
+  "ingredient": {
+    "item": "minecraft:obsidian"
+  },
+  "result": {
+    "item": "imm_ptl_surv_adapt:portal_creator_one_way",
+    "data": {
+      "BiFaced": true
+    }
+  }
+}

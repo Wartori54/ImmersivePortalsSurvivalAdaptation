@@ -1,0 +1,15 @@
+{
+  "type": "nbtcrafting:smithing",
+  "base": {
+    "item": "imm_ptl_surv_adapt:portal_modificator_rotation_modifier"
+  },
+  "ingredient": {
+    "item": "minecraft:nether_wart"
+  },
+  "result": {
+    "item": "imm_ptl_surv_adapt:portal_modificator_rotation_modifier",
+    "data": {
+      "Degrees": "$ base.Degrees * (0-1)#f"
+    }
+  }
+}

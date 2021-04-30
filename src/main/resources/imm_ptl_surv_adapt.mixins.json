@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.Wartori.imm_ptl_surv_adapt.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinFlintAndSteel",
+    "MixinGameRenderer"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
