@@ -307,7 +307,7 @@ public class PortalModificatorItem extends Item {
         stack.damage(1, new Random(), user);
         if (stack.getDamage() >= stack.getMaxDamage()) {
             stack.setCount(0);
-            System.out.println("remove");
+//            System.out.println("remove");
         }
     }
 }

@@ -10,7 +10,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 public class AnalizeC2SPackets {
     public static void executePacketUpdatePortalModificator(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
         ItemStack stack = buf.readItemStack();
-        System.out.println(stack.getTag().getString("facesToDelete"));
+//        System.out.println(stack.getTag().getString("facesToDelete"));
         player.setStackInHand(player.getActiveHand(), stack);
     }
 }

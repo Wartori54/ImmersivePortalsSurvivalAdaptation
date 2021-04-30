@@ -21,7 +21,9 @@
       "DestinationZ": 0.0,
       "DestinationSet": false,
       "Side": "down",
-      "BiFaced": false
+      "BiFaced": false,
+      "width": 3,
+      "height": 3
     },
     "count": 1
   }

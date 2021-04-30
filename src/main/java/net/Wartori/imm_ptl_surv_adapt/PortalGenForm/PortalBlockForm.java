@@ -9,6 +9,7 @@ import com.qouteall.immersive_portals.portal.custom_portal_gen.form.AbstractDili
 import com.qouteall.immersive_portals.portal.custom_portal_gen.form.PortalGenForm;
 import com.qouteall.immersive_portals.portal.nether_portal.BlockPortalShape;
 import net.Wartori.imm_ptl_surv_adapt.Register;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -56,8 +57,6 @@ public class PortalBlockForm extends AbstractDiligentForm {
         for (BlockPos blockPos : info.toShape.frameAreaWithoutCorner) {
             world.setBlockState(blockPos, Register.USED_PORTAL_BLOCK.getDefaultState());
         }
-//        world.setBlockState(info.fromShape.firstFramePos, Blocks.AIR.getDefaultState());
-//        world.setBlockState(info.toShape.firstFramePos, Blocks.AIR.getDefaultState());
 
         Portal portal = info.createTemplatePortal(Portal.entityType);
         Portal flipped = PortalManipulation.createFlippedPortal(portal, Portal.entityType);
@@ -85,7 +84,7 @@ public class PortalBlockForm extends AbstractDiligentForm {
 
     @Override
     public Predicate<BlockState> getAreaPredicate() {
-        return blockState -> blockState.isAir();
+        return AbstractBlock.AbstractBlockState::isAir;
     }
 
     @Override
