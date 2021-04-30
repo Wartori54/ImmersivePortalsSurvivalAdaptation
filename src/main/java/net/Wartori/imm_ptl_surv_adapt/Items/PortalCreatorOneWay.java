@@ -186,6 +186,8 @@ public class PortalCreatorOneWay extends Item {
         } else {
             tooltip.add(4, new TranslatableText("tooltip.imm_ptl_surv_adapt.portal_creator_one_way_not_bi_faced"));
         }
+        tooltip.add(5, new TranslatableText("tooltip.imm_ptl_surv_adapt.portal_creator_one_way_width", data.width));
+        tooltip.add(6, new TranslatableText("tooltip.imm_ptl_surv_adapt.portal_creator_one_way_height", data.height));
         super.appendTooltip(stack, world, tooltip, context);
     }
 

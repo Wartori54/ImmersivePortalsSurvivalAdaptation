@@ -36,5 +36,8 @@
   "tooltip.imm_ptl_surv_adapt.remove_portal_3": "It will%s remove the back face of the exit portal",
   "word.imm_ptl_surv_adapt.not": " not",
   "tooltip.imm_ptl_surv_adapt.shift_use_to_configure": "Shift and use to configure",
-  "gui.imm_ptl_surv_adapt.configure_portal_modificator_title": "Portal modificator configuration"
+  "gui.imm_ptl_surv_adapt.configure_portal_modificator_title": "Portal modificator configuration",
+  "tooltip.imm_ptl_surv_adapt.portal_creator_one_way_width": "Width: %s",
+  "tooltip.imm_ptl_surv_adapt.portal_creator_one_way_height": "Height: %s"
+
 }
