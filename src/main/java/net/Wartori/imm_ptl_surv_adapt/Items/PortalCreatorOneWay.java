@@ -1,10 +1,11 @@
 package net.Wartori.imm_ptl_surv_adapt.Items;
 
-import com.mojang.serialization.Lifecycle;
 import com.qouteall.immersive_portals.portal.Portal;
 import com.qouteall.immersive_portals.portal.PortalManipulation;
+import net.Wartori.imm_ptl_surv_adapt.CHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -14,6 +15,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
@@ -71,6 +75,24 @@ public class PortalCreatorOneWay extends Item {
         }
     }
 
+    @Override
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        if (!world.isClient() || !user.isSneaking() || hand.equals(Hand.OFF_HAND)) {
+            return super.use(world, user, hand);
+        }
+        MinecraftClient minecraftClient = MinecraftClient.getInstance();
+        HitResult hit = minecraftClient.crosshairTarget;
+        switch (hit.getType()) {
+            case BLOCK:
+                return super.use(world, user, hand);
+            case ENTITY:
+            case MISS:
+                break;
+        }
+        CHelper.safeOpenScreenPortalCreator(user, hand);
+
+        return super.use(world, user, hand);
+    }
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
@@ -86,12 +108,12 @@ public class PortalCreatorOneWay extends Item {
         if (context.getPlayer().isSneaking()) {
             Vec3d viewVector = user.getRotationVector();
             Direction facingHorizontal = Direction.getFacing(viewVector.x, 0, viewVector.z);
-            if (!isAreaOfBlock(context.getBlockPos().add(truncateSafely(data.width*facingHorizontal.rotateYCounterclockwise().getUnitVector().getX()/2),
+            if (!isAreaOfBlock(context.getBlockPos().add(truncateSafely(data.width*facingHorizontal.rotateYCounterclockwise().getVector().getX()/2),
                     1,
-                    truncateSafely(data.width*facingHorizontal.rotateYCounterclockwise().getUnitVector().getZ()/2)),
-                    context.getBlockPos().add(truncateSafely(data.width*-facingHorizontal.rotateYCounterclockwise().getUnitVector().getX()/2),
+                    truncateSafely(data.width*facingHorizontal.rotateYCounterclockwise().getVector().getZ()/2)),
+                    context.getBlockPos().add(truncateSafely(data.width*-facingHorizontal.rotateYCounterclockwise().getVector().getX()/2),
                             data.height,
-                            truncateSafely(data.width*-facingHorizontal.rotateYCounterclockwise().getUnitVector().getZ()/2)),
+                            truncateSafely(data.width*-facingHorizontal.rotateYCounterclockwise().getVector().getZ()/2)),
                     Blocks.AIR,
                     world)) {
                 user.sendMessage(new TranslatableText("message.imm_ptl_surv_adapt.portal_obstructed_destination"), false);
@@ -116,22 +138,22 @@ public class PortalCreatorOneWay extends Item {
 //                System.out.println(facingHorizontal);
 //                System.out.println(facing.getUnitVector());
                 BlockPos destinationBlockPos = new BlockPos(data.destination.x, data.destination.y, data.destination.z);
-                if (!isAreaOfBlock(context.getBlockPos().add(truncateSafely(data.width*facingHorizontal.rotateYCounterclockwise().getUnitVector().getX()/2),
+                if (!isAreaOfBlock(context.getBlockPos().add(truncateSafely(data.width*facingHorizontal.rotateYCounterclockwise().getVector().getX()/2),
                                                              1,
-                                                             truncateSafely(data.width*facingHorizontal.rotateYCounterclockwise().getUnitVector().getZ()/2)),
-                                   context.getBlockPos().add(truncateSafely(data.width*-facingHorizontal.rotateYCounterclockwise().getUnitVector().getX()/2),
+                                                             truncateSafely(data.width*facingHorizontal.rotateYCounterclockwise().getVector().getZ()/2)),
+                                   context.getBlockPos().add(truncateSafely(data.width*-facingHorizontal.rotateYCounterclockwise().getVector().getX()/2),
                                                              data.height,
-                                                            truncateSafely(data.width*-facingHorizontal.rotateYCounterclockwise().getUnitVector().getZ()/2)),
+                                                            truncateSafely(data.width*-facingHorizontal.rotateYCounterclockwise().getVector().getZ()/2)),
                                    Blocks.AIR,
                                    world)) {
                     user.sendMessage(new TranslatableText("message.imm_ptl_surv_adapt.portal_obstructed_origin"), false);
                     return super.useOnBlock(context);
-                } else if (!isAreaOfBlock(destinationBlockPos.add(truncateSafely(data.width*facingHorizontal.rotateYCounterclockwise().getUnitVector().getX()/2),
+                } else if (!isAreaOfBlock(destinationBlockPos.add(truncateSafely(data.width*facingHorizontal.rotateYCounterclockwise().getVector().getX()/2),
                         1,
-                        truncateSafely(data.width*facingHorizontal.rotateYCounterclockwise().getUnitVector().getZ()/2)),
-                        destinationBlockPos.add(truncateSafely(data.width*-facingHorizontal.rotateYCounterclockwise().getUnitVector().getX()/2),
+                        truncateSafely(data.width*facingHorizontal.rotateYCounterclockwise().getVector().getZ()/2)),
+                        destinationBlockPos.add(truncateSafely(data.width*-facingHorizontal.rotateYCounterclockwise().getVector().getX()/2),
                                 data.height,
-                                truncateSafely(data.width*-facingHorizontal.rotateYCounterclockwise().getUnitVector().getZ()/2)),
+                                truncateSafely(data.width*-facingHorizontal.rotateYCounterclockwise().getVector().getZ()/2)),
                         Blocks.AIR,
                         world)) {
                     user.sendMessage(new TranslatableText("message.imm_ptl_surv_adapt.portal_obstructed_destination"), false);

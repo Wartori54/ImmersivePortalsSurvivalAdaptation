@@ -11,8 +11,8 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
-public class ConfigurePortalModificatorDeleteScreen extends CottonClientScreen {
-    public ConfigurePortalModificatorDeleteScreen(GuiDescription description) {
+public class ConfigurePortalCreatorOneWayScreen extends CottonClientScreen {
+    public ConfigurePortalCreatorOneWayScreen(GuiDescription description) {
         super(new TranslatableText("gui.imm_ptl_surv_adapt.configure_portal_modificator_title"), description);
     }
 
@@ -44,10 +44,12 @@ public class ConfigurePortalModificatorDeleteScreen extends CottonClientScreen {
 
     public void onScreenClosed() {
         PacketByteBuf buf = PacketByteBufs.create();
-        CompoundTag newTag = Global.portalModificatorC2S.getOrCreateTag();
-        newTag.putString("facesToDelete", Global.finalState);
-        Global.portalModificatorC2S.setTag(newTag);
-        buf.writeItemStack(Global.portalModificatorC2S);
-        ClientPlayNetworking.send(new Identifier("imm_ptl_surv_adapt","update_portal_modificator"), buf);
+//        buf.writeString(Global.finalState);
+        CompoundTag newTag = Global.portalCreatorC2S.getOrCreateTag();
+        newTag.putInt("width", Global.WAndHPortalCreator[0]);
+        newTag.putInt("height", Global.WAndHPortalCreator[1]);
+        Global.portalCreatorC2S.setTag(newTag);
+        buf.writeItemStack(Global.portalCreatorC2S);
+        ClientPlayNetworking.send(new Identifier("imm_ptl_surv_adapt","update_portal_creator"), buf);
     }
 }

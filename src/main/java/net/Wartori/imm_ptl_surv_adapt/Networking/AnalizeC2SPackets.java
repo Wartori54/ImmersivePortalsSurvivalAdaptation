@@ -13,4 +13,9 @@ public class AnalizeC2SPackets {
 //        System.out.println(stack.getTag().getString("facesToDelete"));
         player.setStackInHand(player.getActiveHand(), stack);
     }
+
+    public static void executePacketUpdatePortalCreator(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
+        ItemStack stack = buf.readItemStack();
+        player.setStackInHand(player.getActiveHand(), stack);
+    }
 }

@@ -1,0 +1,61 @@
+package net.Wartori.imm_ptl_surv_adapt.Guis;
+
+import io.github.cottonmc.cotton.gui.client.LightweightGuiDescription;
+import io.github.cottonmc.cotton.gui.widget.WGridPanel;
+import io.github.cottonmc.cotton.gui.widget.WLabel;
+import net.Wartori.imm_ptl_surv_adapt.Global;
+import net.Wartori.imm_ptl_surv_adapt.Guis.widget.WNumberField;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+
+public class ConfigurePortalCreatorOneWayGui extends LightweightGuiDescription {
+
+    public ConfigurePortalCreatorOneWayGui(ItemStack stack) {
+        WGridPanel root = new WGridPanel();
+        root.setSize(170, 100);
+        setRootPanel(root);
+        CompoundTag tag = stack.getOrCreateTag();
+
+        Global.portalCreatorC2S = stack;
+
+        WLabel widthLabel = new WLabel("Width: ");
+        root.add(widthLabel, 1, 1);
+
+        WLabel heightLabel = new WLabel("Height: ");
+        root.add(heightLabel, 1, 3);
+
+        WNumberField widthEntry = new WNumberField();
+        widthEntry.setText(String.valueOf(tag.getInt("width")));
+        widthEntry.setOnNumberTyped(((num, value) -> {
+            Global.log(num);
+            Global.log(value);
+            if (value > 10) {
+                return false;
+            } else {
+                if (value == 0) {
+                    value = 1;
+                }
+                Global.WAndHPortalCreator = new int[]{value, Global.WAndHPortalCreator[1]};
+                return true;
+            }
+        }));
+        root.add(widthEntry, 3, 1, 2, 1);
+
+        WNumberField heightEntry = new WNumberField();
+        heightEntry.setText(String.valueOf(tag.getInt("height")));
+        heightEntry.setOnNumberTyped(((num, value) -> {
+            if (value > 10) {
+                return false;
+            } else {
+                if (value == 0) {
+                    value = 1;
+                }
+                Global.WAndHPortalCreator = new int[]{Global.WAndHPortalCreator[0], value};
+                return true;
+            }
+        }));
+        root.add(heightEntry, 3, 3, 2, 1);
+
+        root.validate(this);
+    }
+}

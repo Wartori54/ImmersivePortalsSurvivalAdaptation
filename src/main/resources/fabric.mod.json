@@ -39,5 +39,6 @@
   },
   "suggests": {
     "another-mod": "*"
-  }
+  },
+  "accessWidener": "imm_ptl_surv_adapt.accesswidener"
 }

@@ -96,6 +96,10 @@ jar {
 	}
 }
 
+minecraft {
+	accessWidener = file("src/main/resources/imm_ptl_surv_adapt.accesswidener")
+}
+
 // configure the maven publication
 publishing {
 	publications {

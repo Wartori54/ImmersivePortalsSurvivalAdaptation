@@ -1,7 +1,6 @@
 package net.Wartori.imm_ptl_surv_adapt;
 
 import com.qouteall.immersive_portals.portal.custom_portal_gen.CustomPortalGeneration;
-import com.qouteall.immersive_portals.render.PortalEntityRenderer;
 import net.Wartori.imm_ptl_surv_adapt.Blocks.PortalBlock;
 import net.Wartori.imm_ptl_surv_adapt.Blocks.PortalOre;
 import net.Wartori.imm_ptl_surv_adapt.Blocks.UsedPortalBlock;
@@ -10,6 +9,7 @@ import net.Wartori.imm_ptl_surv_adapt.Commands.CreatePortalWithRelativeDestinati
 import net.Wartori.imm_ptl_surv_adapt.Commands.ImmersivePortalsSurvivalAdaptationGive;
 import net.Wartori.imm_ptl_surv_adapt.Commands.ToPortalWithRelativeCoordinates;
 import net.Wartori.imm_ptl_surv_adapt.Items.*;
+import net.Wartori.imm_ptl_surv_adapt.Networking.AnalizeC2SPackets;
 import net.Wartori.imm_ptl_surv_adapt.PortalGenForm.PortalBlockForm;
 import net.Wartori.imm_ptl_surv_adapt.Portals.PortalMirrorWithRelativeCoordinates;
 import net.Wartori.imm_ptl_surv_adapt.Portals.PortalWithRelativeCoordinates;
@@ -17,12 +17,12 @@ import net.Wartori.imm_ptl_surv_adapt.features.NonEuclideanHouseFeature;
 import net.Wartori.imm_ptl_surv_adapt.generators.NonEuclideanHouseGenerator;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.structure.v1.FabricStructureBuilder;
 import net.minecraft.block.Block;
-import net.minecraft.client.render.BufferBuilder;
+
 import net.minecraft.command.argument.ArgumentTypes;
 import net.minecraft.command.argument.serialize.ConstantArgumentSerializer;
 import net.minecraft.entity.Entity;
@@ -34,10 +34,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.structure.StructurePieceType;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.BuiltinRegistries;
-import net.minecraft.util.registry.DefaultedRegistry;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.util.registry.*;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.decorator.Decorator;
@@ -131,7 +128,6 @@ public class Register {
     }
 
     protected static void registerEntity() {
-
         DefaultedRegistry<EntityType<?>> registry = Registry.ENTITY_TYPE;
         registerEntity(o -> PortalWithRelativeCoordinates.entityType = o,
                 () -> PortalWithRelativeCoordinates.entityType,
@@ -147,17 +143,7 @@ public class Register {
 
     }
 
-    protected static void registerEntityRenderer() {
-        EntityRendererRegistry.INSTANCE.register(
-                PortalWithRelativeCoordinates.entityType,
-                ((manager, context) -> new PortalEntityRenderer(manager))
-        );
 
-        EntityRendererRegistry.INSTANCE.register(
-                PortalMirrorWithRelativeCoordinates.entityType,
-                (((manager, context) -> new PortalEntityRenderer(manager)))
-        );
-    }
 
     protected static void registerStructures() {
         Registry.register(Registry.STRUCTURE_PIECE, new Identifier("imm_ptl_surv_adapt:non_eucledian_house_piece"), NON_EUCLIDEAN_HOUSE_PIECE);
@@ -200,5 +186,10 @@ public class Register {
                 new Identifier(id),
                 entityType
         );
+    }
+
+    protected static void registerPackets() {
+        ServerPlayNetworking.registerGlobalReceiver(new Identifier("imm_ptl_surv_adapt","update_portal_modificator"), (AnalizeC2SPackets::executePacketUpdatePortalModificator));
+        ServerPlayNetworking.registerGlobalReceiver(new Identifier("imm_ptl_surv_adapt","update_portal_creator"), (AnalizeC2SPackets::executePacketUpdatePortalCreator));
     }
 }

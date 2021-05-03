@@ -4,11 +4,11 @@ import com.mojang.datafixers.util.Pair;
 import com.qouteall.immersive_portals.commands.PortalCommand;
 import com.qouteall.immersive_portals.portal.Portal;
 import com.qouteall.immersive_portals.portal.PortalManipulation;
-import net.Wartori.imm_ptl_surv_adapt.Guis.ConfigurePortalModificatorDeleteGui;
-import net.Wartori.imm_ptl_surv_adapt.Guis.ConfigurePortalModificatorDeleteScreen;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
+import net.Wartori.imm_ptl_surv_adapt.CHelper;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,6 +21,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -30,6 +31,7 @@ import java.util.Random;
 
 
 public class PortalModificatorItem extends Item {
+
 
     public static class Data {
 
@@ -72,8 +74,8 @@ public class PortalModificatorItem extends Item {
         super(settings);
     }
 
-
     @Override
+    @Environment(EnvType.CLIENT)
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
         Data dataItem = Data.deserialize(stack.getOrCreateTag());
@@ -85,7 +87,7 @@ public class PortalModificatorItem extends Item {
             tooltip.add(2, Text.of("Angle: " + dataItem.degrees + " degrees"));
         } else if (dataItem.type == 3) {
             tooltip.add(1, new TranslatableText("tooltip.imm_ptl_surv_adapt.portal_modificator_action_3"));
-            if (Screen.hasShiftDown()) {
+            if (CHelper.safeHasShiftDown()) {
                 boolean[] out = decodeFacesToDelete(dataItem.facesToDelete);
                 for (int i = 0; i < 4; i++) {
                     if (out[i]) {
@@ -143,10 +145,10 @@ public class PortalModificatorItem extends Item {
 //                    AtomicInteger portalsRotated = new AtomicInteger();
                     Vec3d viewVector = user.getRotationVector();
                     Direction facing = Direction.getFacing(viewVector.x, viewVector.y, viewVector.z);
-                    Quaternion rotation = new Quaternion(facing.getUnitVector(), data.degrees, true);
-                    Quaternion rotationOtherWay = new Quaternion(facing.getUnitVector(), -data.degrees, true);
-                    Quaternion rotationInverseOtherWay = new Quaternion(facing.getOpposite().getUnitVector(), -data.degrees, true);
-                    Quaternion rotationInverse = new Quaternion(facing.getOpposite().getUnitVector(), data.degrees, true);
+                    Quaternion rotation = new Quaternion(vec3ito3f(facing.getVector()), data.degrees, true);
+                    Quaternion rotationOtherWay = new Quaternion(vec3ito3f(facing.getVector()), -data.degrees, true);
+                    Quaternion rotationInverseOtherWay = new Quaternion(vec3ito3f(facing.getOpposite().getVector()), -data.degrees, true);
+                    Quaternion rotationInverse = new Quaternion(vec3ito3f(facing.getOpposite().getVector()), data.degrees, true);
 
                     //opposite portal of the destination portal of the interacted one
                     PortalManipulation.getPortalClutter(world, portal.getDestPos(), portal.transformLocalVecNonScale(portal.getNormal()),  p -> Objects.equals(p.specificPlayerId, portal.specificPlayerId) && portal.getDiscriminator() != (p.getDiscriminator()))
@@ -272,13 +274,12 @@ public class PortalModificatorItem extends Item {
                 }
             }
         } else {
-            if (data.type == 3 && user.isSneaking()) {
-                MinecraftClient.getInstance().openScreen(new ConfigurePortalModificatorDeleteScreen(new ConfigurePortalModificatorDeleteGui(user.getStackInHand(hand))));
+            if (data.type == 3 && user.isSneaking() && hand.equals(Hand.MAIN_HAND)) {
+                CHelper.safeOpenScreenPortalModificator(user, hand);
             }
         }
         return super.use(world, user, hand);
     }
-
 
     public static boolean[] decodeFacesToDelete(String facesToDelete) {
         boolean[] out = new boolean[4];
@@ -309,5 +310,11 @@ public class PortalModificatorItem extends Item {
             stack.setCount(0);
 //            System.out.println("remove");
         }
+    }
+
+    public static Vector3f vec3ito3f(Vec3i vec) {
+        Vector3f vec3f = new Vector3f();
+        vec3f.set(vec.getX(), vec.getY(), vec.getZ());
+        return vec3f;
     }
 }
