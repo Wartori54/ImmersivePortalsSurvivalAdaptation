@@ -14,7 +14,14 @@
   "result": {
     "item": "imm_ptl_surv_adapt:portal_creator_one_way",
     "data": {
-      "BiFaced": true
+      "Side": "$ base.Side",
+      "BiFaced": true,
+      "DestinationSet": "$ base.DestinationSet",
+      "DestinationX": "$ base.DestinationX",
+      "DestinationY": "$ base.DestinationY",
+      "DestinationZ": "$ base.DestinationZ",
+      "width": "$ base.width",
+      "height": "$ base.height"
     }
   }
 }

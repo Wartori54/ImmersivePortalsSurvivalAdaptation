@@ -197,19 +197,24 @@ public class PortalCreatorOneWay extends Item {
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         tooltip.add(1, new TranslatableText("desc.imm_ptl_surv_adapt.portal_creator_one_way"));
         tooltip.add(2, new TranslatableText("desc.imm_ptl_surv_adapt-portal_creator_one_way_line_2"));
-        Data data = Data.deserialize(stack.getOrCreateTag());
-        if (data.destination_set) {
-            tooltip.add(3, new TranslatableText("tooltip.imm_ptl_surv_adapt.portal_creator_one_way_destination_set", data.destination.x, data.destination.y, data.destination.z));
+        if (CHelper.safeHasShiftDown()) {
+            Data data = Data.deserialize(stack.getOrCreateTag());
+            if (data.destination_set) {
+                tooltip.add(3, new TranslatableText("tooltip.imm_ptl_surv_adapt.portal_creator_one_way_destination_set", data.destination.x, data.destination.y, data.destination.z));
+            } else {
+                tooltip.add(3, new TranslatableText("tooltip.imm_ptl_surv_adapt.portal_creator_one_way_destination_not_set"));
+            }
+            if (data.biFaced) {
+                tooltip.add(4, new TranslatableText("tooltip.imm_ptl_surv_adapt.portal_creator_one_way_bi_faced"));
+            } else {
+                tooltip.add(4, new TranslatableText("tooltip.imm_ptl_surv_adapt.portal_creator_one_way_not_bi_faced"));
+            }
+            tooltip.add(5, new TranslatableText("tooltip.imm_ptl_surv_adapt.portal_creator_one_way_width", data.width));
+            tooltip.add(6, new TranslatableText("tooltip.imm_ptl_surv_adapt.portal_creator_one_way_height", data.height));
         } else {
-            tooltip.add(3, new TranslatableText("tooltip.imm_ptl_surv_adapt.portal_creator_one_way_destination_not_set"));
+            tooltip.add(3, new TranslatableText("tooltip.imm_ptl_surv_adapt.shift_for_more_info"));
+            tooltip.add(4, new TranslatableText("tooltip.imm_ptl_surv_adapt.shift_use_to_configure"));
         }
-        if (data.biFaced) {
-            tooltip.add(4, new TranslatableText("tooltip.imm_ptl_surv_adapt.portal_creator_one_way_bi_faced"));
-        } else {
-            tooltip.add(4, new TranslatableText("tooltip.imm_ptl_surv_adapt.portal_creator_one_way_not_bi_faced"));
-        }
-        tooltip.add(5, new TranslatableText("tooltip.imm_ptl_surv_adapt.portal_creator_one_way_width", data.width));
-        tooltip.add(6, new TranslatableText("tooltip.imm_ptl_surv_adapt.portal_creator_one_way_height", data.height));
         super.appendTooltip(stack, world, tooltip, context);
     }
 
