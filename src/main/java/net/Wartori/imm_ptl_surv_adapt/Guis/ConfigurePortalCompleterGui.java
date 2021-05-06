@@ -23,6 +23,9 @@ public class ConfigurePortalCompleterGui extends LightweightGuiDescription {
         Global.portalCompleterC2S = itemStack;
         CompoundTag tag = itemStack.getOrCreateTag();
         boolean[] state = Utils.intArray2boolArray(tag.getIntArray("portalsToComplete"));
+        if (state.length != 3) {
+            state = new boolean[]{false, false, false};
+        }
 
         WToggleButton backPortal = new WToggleButton();
         backPortal.setLabel(new TranslatableText("gui.imm_ptl_surv_adapt.back_portal"));

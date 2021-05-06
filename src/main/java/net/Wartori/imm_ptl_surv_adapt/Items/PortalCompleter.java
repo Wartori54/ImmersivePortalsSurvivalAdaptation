@@ -76,7 +76,7 @@ public class PortalCompleter extends Item {
                     portalExitBack.world.spawnEntity(portalExitBack);
                     Utils.damageIt((ServerPlayerEntity) user, hand);
                 }
-                if (Data.portalsToComplete[2] && Data.portalsToComplete[1] && PortalManipulation.getPortalClutter(world,
+                if (Data.portalsToComplete[2] && PortalManipulation.getPortalClutter(world,
                         portal.getDestPos(),
                         portal.transformLocalVecNonScale(portal.getNormal().multiply(-1)),
                         p -> Objects.equals(p.specificPlayerId, portal.specificPlayerId)

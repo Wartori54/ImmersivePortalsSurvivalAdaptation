@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "IMI"
+  ],
+  "key": {
+    "I": {
+      "item": "imm_ptl_surv_adapt:portal_ingot"
+    },
+    "M": {
+      "item": "imm_ptl_surv_adapt:portal_modificator"
+    }
+  },
+  "result": {
+    "item": "imm_ptl_surv_adapt:portal_completer",
+    "count": 1,
+    "data": {
+      "portalsToComplete": ["(1)#i", "(0)#i", "(0)#i"]
+    }
+  }
+}
