@@ -13,5 +13,6 @@ public class Main implements ModInitializer {
 		Register.registerCommands();
 		Register.registerEntity();
 		Register.registerStructures();
+		Register.registerPackets();
 	}
 }

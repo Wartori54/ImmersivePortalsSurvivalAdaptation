@@ -3,6 +3,7 @@ package net.Wartori.imm_ptl_surv_adapt.Guis;
 import io.github.cottonmc.cotton.gui.GuiDescription;
 import io.github.cottonmc.cotton.gui.client.CottonClientScreen;
 import net.Wartori.imm_ptl_surv_adapt.Global;
+import net.Wartori.imm_ptl_surv_adapt.Utils;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.nbt.CompoundTag;
@@ -11,9 +12,9 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
-public class ConfigurePortalCreatorOneWayScreen extends CottonClientScreen {
-    public ConfigurePortalCreatorOneWayScreen(GuiDescription description) {
-        super(new TranslatableText("gui.imm_ptl_surv_adapt.configure_portal_creator_title"), description);
+public class ConfigurePortalCompleterScreen extends CottonClientScreen {
+    public ConfigurePortalCompleterScreen(GuiDescription description) {
+        super(new TranslatableText("gui.imm_ptl_surv_adapt.configure_portal_completer_title"), description);
     }
 
     @Override
@@ -45,11 +46,11 @@ public class ConfigurePortalCreatorOneWayScreen extends CottonClientScreen {
     public void onScreenClosed() {
         PacketByteBuf buf = PacketByteBufs.create();
 //        buf.writeString(Global.finalState);
-        CompoundTag newTag = Global.portalCreatorC2S.getOrCreateTag();
-        newTag.putInt("width", Global.WAndHPortalCreator[0]);
-        newTag.putInt("height", Global.WAndHPortalCreator[1]);
-        Global.portalCreatorC2S.setTag(newTag);
-        buf.writeItemStack(Global.portalCreatorC2S);
-        ClientPlayNetworking.send(new Identifier("imm_ptl_surv_adapt","update_portal_creator"), buf);
+        CompoundTag tag = Global.portalCompleterC2S.getOrCreateTag();
+        tag.putIntArray("portalsToComplete", Utils.boolArray2IntArray(Global.portalCompleterData));
+        Global.portalCompleterC2S.setTag(tag);
+
+        buf.writeItemStack(Global.portalCompleterC2S);
+        ClientPlayNetworking.send(Utils.myId("update_portal_completer"), buf);
     }
 }

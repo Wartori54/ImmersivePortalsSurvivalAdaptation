@@ -1,9 +1,6 @@
 package net.Wartori.imm_ptl_surv_adapt;
 
-import net.Wartori.imm_ptl_surv_adapt.Guis.ConfigurePortalCreatorOneWayGui;
-import net.Wartori.imm_ptl_surv_adapt.Guis.ConfigurePortalCreatorOneWayScreen;
-import net.Wartori.imm_ptl_surv_adapt.Guis.ConfigurePortalModificatorDeleteGui;
-import net.Wartori.imm_ptl_surv_adapt.Guis.ConfigurePortalModificatorDeleteScreen;
+import net.Wartori.imm_ptl_surv_adapt.Guis.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -23,5 +20,9 @@ public class CHelper {
 
     public static void safeOpenScreenPortalCreator(PlayerEntity user, Hand hand) {
         MinecraftClient.getInstance().openScreen(new ConfigurePortalCreatorOneWayScreen(new ConfigurePortalCreatorOneWayGui(user.getStackInHand(hand))));
+    }
+
+    public static void safeOpenScreenPortalCompleter(PlayerEntity user, Hand hand) {
+        MinecraftClient.getInstance().openScreen(new ConfigurePortalCompleterScreen(new ConfigurePortalCompleterGui(user.getStackInHand(hand))));
     }
 }

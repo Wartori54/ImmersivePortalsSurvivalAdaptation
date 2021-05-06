@@ -7,6 +7,7 @@ import net.Wartori.imm_ptl_surv_adapt.Global;
 import net.Wartori.imm_ptl_surv_adapt.Guis.widget.WNumberField;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.text.TranslatableText;
 
 public class ConfigurePortalCreatorOneWayGui extends LightweightGuiDescription {
 
@@ -18,10 +19,10 @@ public class ConfigurePortalCreatorOneWayGui extends LightweightGuiDescription {
 
         Global.portalCreatorC2S = stack;
 
-        WLabel widthLabel = new WLabel("Width: ");
+        WLabel widthLabel = new WLabel(new TranslatableText("tooltip.imm_ptl_surv_adapt.portal_creator_one_way_width"));
         root.add(widthLabel, 1, 1);
 
-        WLabel heightLabel = new WLabel("Height: ");
+        WLabel heightLabel = new WLabel(new TranslatableText("tooltip.imm_ptl_surv_adapt.portal_creator_one_way_height"));
         root.add(heightLabel, 1, 3);
 
         WNumberField widthEntry = new WNumberField();

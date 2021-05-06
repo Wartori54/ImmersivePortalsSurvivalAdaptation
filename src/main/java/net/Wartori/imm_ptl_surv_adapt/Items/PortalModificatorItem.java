@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
+import static net.Wartori.imm_ptl_surv_adapt.Utils.damageIt;
+
 
 public class PortalModificatorItem extends Item {
 
@@ -301,15 +303,6 @@ public class PortalModificatorItem extends Item {
             }
         }
         return out.toString();
-    }
-
-    public static void damageIt(ServerPlayerEntity user, Hand hand) {
-        ItemStack stack = user.getStackInHand(hand);
-        stack.damage(1, new Random(), user);
-        if (stack.getDamage() >= stack.getMaxDamage()) {
-            stack.setCount(0);
-//            System.out.println("remove");
-        }
     }
 
     public static Vector3f vec3ito3f(Vec3i vec) {

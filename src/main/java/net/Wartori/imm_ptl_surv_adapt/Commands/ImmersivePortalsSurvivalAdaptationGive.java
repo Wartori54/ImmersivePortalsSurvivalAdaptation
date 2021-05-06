@@ -6,10 +6,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.Wartori.imm_ptl_surv_adapt.Commands.ArgumentTypes.DirectionArgumentType;
 import net.Wartori.imm_ptl_surv_adapt.Global;
-import net.Wartori.imm_ptl_surv_adapt.Items.PortalCreatorOneWay;
-import net.Wartori.imm_ptl_surv_adapt.Items.PortalModificatorDistanceModifier;
-import net.Wartori.imm_ptl_surv_adapt.Items.PortalModificatorItem;
-import net.Wartori.imm_ptl_surv_adapt.Items.PortalModificatorRotationModifier;
+import net.Wartori.imm_ptl_surv_adapt.Items.*;
 import net.Wartori.imm_ptl_surv_adapt.Register;
 import net.minecraft.command.argument.BlockPosArgumentType;
 import net.minecraft.command.argument.EntityArgumentType;
@@ -158,6 +155,23 @@ public class ImmersivePortalsSurvivalAdaptationGive {
                             }
                             return 1;
                         })));
+        builder.then(CommandManager.argument("targets", EntityArgumentType.players())
+                .then(CommandManager.literal("portal_completer")
+                    .then(CommandManager.argument("back", BoolArgumentType.bool())
+                        .then(CommandManager.argument("back_exit", BoolArgumentType.bool())
+                            .then(CommandManager.argument("exit", BoolArgumentType.bool())
+                                .executes(context -> {
+                                    for (ServerPlayerEntity serverPlayerEntity : EntityArgumentType.getPlayers(context,"targets")) {
+                                        ItemStack itemStack = new ItemStack(Register.PORTAL_COMPLETER_ITEM);
+                                        itemStack.setTag(
+                                                PortalCompleter.Data.serialize(
+                                                        new boolean[]{BoolArgumentType.getBool(context, "back"),
+                                                        BoolArgumentType.getBool(context, "back_exit"),
+                                                        BoolArgumentType.getBool(context, "exit")}));
+                                        serverPlayerEntity.giveItemStack(itemStack);
+                                    }
+                                    return 1;
+                                }))))));
         dispatcher.register(builder);
 
     }

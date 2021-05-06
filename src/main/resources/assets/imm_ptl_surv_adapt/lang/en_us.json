@@ -6,6 +6,7 @@
   "item.imm_ptl_surv_adapt.portal_modificator_rotation_modifier": "Portal Modificator Rotation Modifier",
   "item.imm_ptl_surv_adapt.portal_ingot": "Portal Ingot",
   "item.imm_ptl_surv_adapt.portal_modificator_delete": "Portal Modificator Delete",
+  "item.imm_ptl_surv_adapt.portal_completer": "Portal Completer",
   "block.imm_ptl_surv_adapt.portal_block": "Portal Block",
   "block.imm_ptl_surv_adapt.used_portal_block": "Used Portal Block",
   "info.imm_ptl_surv_adapt.rotate": "%s along the %s%s axis",
@@ -37,7 +38,14 @@
   "word.imm_ptl_surv_adapt.not": " not",
   "tooltip.imm_ptl_surv_adapt.shift_use_to_configure": "Shift and use to configure",
   "gui.imm_ptl_surv_adapt.configure_portal_modificator_title": "Portal modificator configuration",
-  "tooltip.imm_ptl_surv_adapt.portal_creator_one_way_width": "Width: %s",
-  "tooltip.imm_ptl_surv_adapt.portal_creator_one_way_height": "Height: %s"
-
+  "gui.imm_ptl_surv_adapt.configure_portal_creator_title": "Portal creator configuration",
+  "gui.imm_ptl_surv_adapt.configure_portal_completer_title": "Portal completer configuration",
+  "tooltip.imm_ptl_surv_adapt.portal_creator_one_way_width_and_number": "Width: %s",
+  "tooltip.imm_ptl_surv_adapt.portal_creator_one_way_height_and_number": "Height: %s",
+  "tooltip.imm_ptl_surv_adapt.portal_creator_one_way_width": "Width:",
+  "tooltip.imm_ptl_surv_adapt.portal_creator_one_way_height": "Height:",
+  "tooltip.imm_ptl_surv_adapt.portal_completer_desc": "Use on a portal to complete the faces below",
+  "gui.imm_ptl_surv_adapt.back_portal": "Back face of portal",
+  "gui.imm_ptl_surv_adapt.back_exit_portal": "Back face of exit portal",
+  "gui.imm_ptl_surv_adapt.exit_portal": "Exit portal"
 }

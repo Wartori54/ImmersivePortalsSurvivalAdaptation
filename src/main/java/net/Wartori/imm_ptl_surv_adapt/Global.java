@@ -9,6 +9,8 @@ public class Global {
     public static int[] WAndHPortalCreator = {3, 3};
     public static ItemStack portalModificatorC2S;
     public static ItemStack portalCreatorC2S;
+    public static ItemStack portalCompleterC2S;
+    public static boolean[] portalCompleterData = new boolean[3];
     public static String MOD_ID = "imm_ptl_surv_adapt";
 
     public static final Logger LOGGER = LogManager.getLogger("imm_ptl_surv_adapt");
