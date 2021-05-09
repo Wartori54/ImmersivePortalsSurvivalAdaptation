@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients":[
+    {
+    "item": "minecraft:nether_wart"
+  },
+    {
+      "item": "imm_ptl_surv_adapt:portal_modificator_rotation_modifier"
+    }
+  ],
+  "result": {
+    "item": "imm_ptl_surv_adapt:portal_modificator_rotation_modifier",
+    "count": 1,
+    "data": {
+      "Degrees": "$ i1.Degrees * (0-1)#f"
+    }
+  }
+}

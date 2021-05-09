@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "imm_ptl_surv_adapt:portal_modificator_distance_modifier"
+    },
+    {
+      "item": "imm_ptl_surv_adapt:portal_modificator",
+      "data": {
+        "require": {
+          "Action": "$..1"
+        }
+      }
+    }
+  ],
+  "result": {
+    "item": "imm_ptl_surv_adapt:portal_modificator",
+    "count": 1,
+    "data": {
+      "Action": 1,
+      "Distance": "$ i1.Distance+i0.Distance",
+      "Degrees": 0.0
+    }
+  }
+}
