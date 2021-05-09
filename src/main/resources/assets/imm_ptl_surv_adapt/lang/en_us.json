@@ -9,6 +9,7 @@
   "item.imm_ptl_surv_adapt.portal_completer": "Portal Completer",
   "block.imm_ptl_surv_adapt.portal_block": "Portal Block",
   "block.imm_ptl_surv_adapt.used_portal_block": "Used Portal Block",
+  "itemGroup.imm_ptl_surv_adapt.immersive_portals_survival_adaptation_group": "Immersive Portals Survival Adaptation",
   "info.imm_ptl_surv_adapt.rotate": "%s along the %s%s axis",
   "info.imm_ptl_surv_adapt.too_far": "You are trying to move the portal too far away",
   "tooltip.imm_ptl_surv_adapt.increase_distance_modificator": "Increase distance by: %s",

@@ -1,11 +1,14 @@
 package net.Wartori.imm_ptl_surv_adapt.Items;
 
+import net.Wartori.imm_ptl_surv_adapt.Register;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -25,7 +28,7 @@ public class PortalModificatorRotationModifier extends Item {
 
         public CompoundTag serialize() {
             CompoundTag tag = new CompoundTag();
-            tag.putFloat("Distance", rotation);
+            tag.putFloat("Degrees", rotation);
             return tag;
         }
 
@@ -40,5 +43,18 @@ public class PortalModificatorRotationModifier extends Item {
         Data dataItem = Data.deserialize(stack.getOrCreateTag());
         tooltip.add(1, new TranslatableText("tooltip.imm_ptl_surv_adapt.increase_rotation_modificator", dataItem.rotation));
 
+    }
+
+    @Override
+    public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
+        if (this.isIn(group)) {
+            for (float i :
+                    new float[]{5, 15, 90}) {
+                ItemStack itemStack = new ItemStack(Register.PORTAL_MODIFICATOR_ROTATION_MODIFIER_ITEM);
+                Data data = new Data(i);
+                itemStack.setTag(data.serialize());
+                stacks.add(itemStack);
+            }
+        }
     }
 }

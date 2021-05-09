@@ -18,6 +18,7 @@ import net.Wartori.imm_ptl_surv_adapt.features.NonEuclideanHouseFeature;
 import net.Wartori.imm_ptl_surv_adapt.generators.NonEuclideanHouseGenerator;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
@@ -34,7 +35,7 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.item.ItemStack;
 import net.minecraft.structure.StructurePieceType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.*;
@@ -44,24 +45,27 @@ import net.minecraft.world.gen.decorator.Decorator;
 import net.minecraft.world.gen.decorator.RangeDecoratorConfig;
 import net.minecraft.world.gen.feature.*;
 import com.google.common.collect.Lists;
-import org.lwjgl.system.CallbackI;
+
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class Register {
-    public static final Item PORTAL_MODIFICATOR_ITEM = new PortalModificatorItem(new Item.Settings().maxCount(1).maxDamage(100));
-    public static final Item PORTAL_MODIFICATOR_DISTANCE_MODIFIER_ITEM = new PortalModificatorDistanceModifier(new Item.Settings().maxCount(1));
-    public static final Item PORTAL_MODIFICATOR_ROTATION_MODIFIER_ITEM = new PortalModificatorRotationModifier(new Item.Settings().maxCount(1));
-    public static final Item PORTAL_CREATOR_ONE_WAY = new PortalCreatorOneWay(new Item.Settings().group(ItemGroup.MISC).maxCount(1));
-    public static final Item PORTAL_INGOT = new PortalIngot(new Item.Settings().group(ItemGroup.MISC));
-    public static final Item PORTAL_MODIFICATOR_DELETE_ITEM = new PortalModificatorDelete(new Item.Settings().group(ItemGroup.MISC).maxCount(1));
-    public static final Item PORTAL_COMPLETER_ITEM = new PortalCompleter(new Item.Settings().maxCount(1).maxDamage(12));
+
+    public static final Item PORTAL_MODIFICATOR_ITEM = new PortalModificatorItem(new Item.Settings().maxCount(1).maxDamage(100).group(RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP));
+    public static final Item PORTAL_MODIFICATOR_DISTANCE_MODIFIER_ITEM = new PortalModificatorDistanceModifier(new Item.Settings().maxCount(1).group(RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP));
+    public static final Item PORTAL_MODIFICATOR_ROTATION_MODIFIER_ITEM = new PortalModificatorRotationModifier(new Item.Settings().maxCount(1).group(RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP));
+    public static final Item PORTAL_CREATOR_ONE_WAY = new PortalCreatorOneWay(new Item.Settings().maxCount(1).group(RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP));
+    public static final Item PORTAL_INGOT = new PortalIngot(new Item.Settings().group(RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP));
+    public static final Item PORTAL_MODIFICATOR_DELETE_ITEM = new PortalModificatorDelete(new Item.Settings().group(RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP).maxCount(1));
+    public static final Item PORTAL_COMPLETER_ITEM = new PortalCompleter(new Item.Settings().maxCount(1).maxDamage(12).group(RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP));
 
     public static final Block PORTAL_BLOCK = new PortalBlock();
     public static final Block PORTAL_ORE = new PortalOre();
     public static final Block USED_PORTAL_BLOCK = new UsedPortalBlock();
+
+
 
     public static final PortalBlockForm portalBlockForm = new PortalBlockForm();
 

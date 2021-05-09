@@ -3,12 +3,14 @@ package net.Wartori.imm_ptl_surv_adapt.Items;
 import com.qouteall.immersive_portals.portal.Portal;
 import com.qouteall.immersive_portals.portal.PortalManipulation;
 import net.Wartori.imm_ptl_surv_adapt.CHelper;
+import net.Wartori.imm_ptl_surv_adapt.Register;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.CompoundTag;
@@ -17,6 +19,7 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -34,12 +37,12 @@ public class PortalCreatorOneWay extends Item {
     }
 
     public static class Data {
-        public static Vec3d destination;
-        public static boolean destination_set;
-        public static String side;
-        public static boolean biFaced;
-        public static float width;
-        public static float height;
+        public Vec3d destination;
+        public boolean destination_set;
+        public String side;
+        public boolean biFaced;
+        public float width;
+        public float height;
 
         public Data(Vec3d destination, boolean destination_set, String side, boolean biFaced, float width, float height) {
             this.destination = destination;
@@ -50,7 +53,7 @@ public class PortalCreatorOneWay extends Item {
             this.height = height;
         }
 
-        public static CompoundTag serialize() {
+        public CompoundTag serialize() {
             CompoundTag tag = new CompoundTag();
             tag.putDouble("DestinationX", destination.getX());
             tag.putDouble("DestinationY", destination.getY());
@@ -216,6 +219,20 @@ public class PortalCreatorOneWay extends Item {
             tooltip.add(4, new TranslatableText("tooltip.imm_ptl_surv_adapt.shift_use_to_configure"));
         }
         super.appendTooltip(stack, world, tooltip, context);
+    }
+
+    @Override
+    public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
+        if (this.isIn(group)) {
+            for (boolean j :
+                    new boolean[]{true, false}) {
+                ItemStack itemStack = new ItemStack(Register.PORTAL_CREATOR_ONE_WAY);
+                Data data = new Data(Vec3d.ZERO, false, "down", j, 3, 3);
+                itemStack.setTag(data.serialize());
+                stacks.add(itemStack);
+            }
+        }
+
     }
 
     public static boolean isAreaOfBlock(BlockPos start, BlockPos end, Block block, World world) {

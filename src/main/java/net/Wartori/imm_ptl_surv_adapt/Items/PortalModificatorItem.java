@@ -5,12 +5,14 @@ import com.qouteall.immersive_portals.commands.PortalCommand;
 import com.qouteall.immersive_portals.portal.Portal;
 import com.qouteall.immersive_portals.portal.PortalManipulation;
 import net.Wartori.imm_ptl_surv_adapt.CHelper;
+import net.Wartori.imm_ptl_surv_adapt.Register;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -18,6 +20,7 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3d;
@@ -27,7 +30,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 
 import static net.Wartori.imm_ptl_surv_adapt.Utils.damageIt;
 
@@ -37,7 +39,7 @@ public class PortalModificatorItem extends Item {
 
     public static class Data {
 
-        public int type; //1=move,2=rotate
+        public int type; //1=move, 2=rotate, 3=delete
         public float distance;
         public float degrees;
         public String facesToDelete;
@@ -107,6 +109,41 @@ public class PortalModificatorItem extends Item {
             tooltip.add(1, new TranslatableText("tooltip.imm_ptl_surv_adapt.portal_modificator_action_0"));
         }
 
+    }
+
+    @Override
+    public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
+        if (this.isIn(group)) {
+            ItemStack nothingStack = new ItemStack(Register.PORTAL_MODIFICATOR_ITEM);
+            Data nothingStackData = new Data(0, 0, 0, "0000");
+            nothingStack.setTag(nothingStackData.serialize());
+            stacks.add(nothingStack);
+
+            ItemStack moveHalfStack = new ItemStack(Register.PORTAL_MODIFICATOR_ITEM);
+            Data moveHalfStackData = new Data(1, 0.5F, 0, "0000");
+            moveHalfStack.setTag(moveHalfStackData.serialize());
+            stacks.add(moveHalfStack);
+
+            ItemStack moveMinusHalfStack = new ItemStack(Register.PORTAL_MODIFICATOR_ITEM);
+            Data moveMinusHalfStackData = new Data(1, -.5F, 0, "0000");
+            moveMinusHalfStack.setTag(moveMinusHalfStackData.serialize());
+            stacks.add(moveMinusHalfStack);
+
+            ItemStack rotate15Stack = new ItemStack(Register.PORTAL_MODIFICATOR_ITEM);
+            Data rotate15StackData = new Data(2, 0, 15, "0000");
+            rotate15Stack.setTag(rotate15StackData.serialize());
+            stacks.add(rotate15Stack);
+
+            ItemStack rotate90Stack = new ItemStack(Register.PORTAL_MODIFICATOR_ITEM);
+            Data rotate90StackData = new Data(2, 0, 90, "0000");
+            rotate90Stack.setTag(rotate90StackData.serialize());
+            stacks.add(rotate90Stack);
+
+            ItemStack deleteStack = new ItemStack(Register.PORTAL_MODIFICATOR_ITEM);
+            Data deleteStackData = new Data(3, 0, 0, "1111");
+            deleteStack.setTag(deleteStackData.serialize());
+            stacks.add(deleteStack);
+        }
     }
 
     @Override

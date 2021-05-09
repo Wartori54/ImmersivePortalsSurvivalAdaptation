@@ -4,9 +4,11 @@ import com.qouteall.immersive_portals.commands.PortalCommand;
 import com.qouteall.immersive_portals.portal.Portal;
 import com.qouteall.immersive_portals.portal.PortalManipulation;
 import net.Wartori.imm_ptl_surv_adapt.CHelper;
+import net.Wartori.imm_ptl_surv_adapt.Register;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.Wartori.imm_ptl_surv_adapt.Utils;
@@ -16,6 +18,7 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Hand;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -101,5 +104,18 @@ public class PortalCompleter extends Item {
         tooltip.add(1, new TranslatableText("tooltip.imm_ptl_surv_adapt.portal_completer_desc"));
         tooltip.add(2, new TranslatableText("tooltip.imm_ptl_surv_adapt.shift_use_to_configure"));
         super.appendTooltip(stack, world, tooltip, context);
+    }
+
+    @Override
+    public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
+        if (this.isIn(group)) {
+            for (boolean i :
+                    new boolean[]{false, true}) {
+                ItemStack itemStack = new ItemStack(Register.PORTAL_COMPLETER_ITEM);
+                CompoundTag tag = Data.serialize(new boolean[]{true, i, i});
+                itemStack.setTag(tag);
+                stacks.add(itemStack);
+            }
+        }
     }
 }
