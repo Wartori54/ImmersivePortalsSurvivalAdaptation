@@ -161,7 +161,7 @@ public class PortalModificatorItem extends Item {
                     Vec3d movedist = Vec3d.of(facing.getVector()).multiply(data.distance);
                     if (portal.getDestPos().distanceTo(portal.getOriginPos().add(movedist)) > 300) {
                         user.sendMessage(new TranslatableText("info.imm_ptl_surv_adapt.too_far"), true);
-                        return super.use(world, user, hand);
+                        return TypedActionResult.fail(user.getStackInHand(hand));
                     }
                     PortalManipulation.getPortalClutter(world, portal.getDestPos(), portal.transformLocalVecNonScale(portal.getNormal()),  p -> Objects.equals(p.specificPlayerId, portal.specificPlayerId) && portal.getDiscriminator() != (p.getDiscriminator()))
                             .forEach(e -> {
@@ -286,6 +286,7 @@ public class PortalModificatorItem extends Item {
                     portal.fromTag(portalNbt);
                     portal.reloadAndSyncToClient();
                     damageIt((ServerPlayerEntity) user, hand);
+                    return TypedActionResult.success(user.getStackInHand(hand));
 
 //                    System.out.println("Rotated originpos, normal 1");
 //                    System.out.println(portal.axisW.toString()+ " " + portal.axisH.toString());
@@ -311,13 +312,14 @@ public class PortalModificatorItem extends Item {
                         damageIt((ServerPlayerEntity) user, hand);
                     }
                 }
+                return TypedActionResult.success(user.getStackInHand(hand));
             }
         } else {
             if (data.type == 3 && user.isSneaking() && hand.equals(Hand.MAIN_HAND)) {
                 CHelper.safeOpenScreenPortalModificator(user, hand);
             }
         }
-        return super.use(world, user, hand);
+        return TypedActionResult.fail(user.getStackInHand(hand));
     }
 
     public static boolean[] decodeFacesToDelete(String facesToDelete) {

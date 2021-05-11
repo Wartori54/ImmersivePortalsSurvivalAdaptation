@@ -120,7 +120,7 @@ public class PortalCreatorOneWay extends Item {
                     Blocks.AIR,
                     world)) {
                 user.sendMessage(new TranslatableText("message.imm_ptl_surv_adapt.portal_obstructed_destination"), false);
-                return super.useOnBlock(context);
+                return ActionResult.FAIL;
             }
             Vec3d targetBlock = new Vec3d(context.getBlockPos().getX(), context.getBlockPos().getY(), context.getBlockPos().getZ());
             data.destination = targetBlock;
@@ -129,11 +129,13 @@ public class PortalCreatorOneWay extends Item {
             CompoundTag tag = data.serialize();
             context.getStack().setTag(tag);
             context.getPlayer().sendMessage(new TranslatableText("message.imm_ptl_surv_adapt.destination_set", targetBlock.x, targetBlock.y, targetBlock.z), false);
+            return ActionResult.SUCCESS;
         } else {
             if (data.destination_set) {
                 if (data.destination.distanceTo(Vec3d.ofCenter(context.getBlockPos())) > 100) {
                     user.sendMessage(new TranslatableText("message.imm_ptl_surv_adapt.place_too_far"), false);
-                    return super.useOnBlock(context);
+                    return ActionResult.FAIL;
+
                 }
 
                 Vec3d viewVector = user.getRotationVector();
@@ -150,7 +152,8 @@ public class PortalCreatorOneWay extends Item {
                                    Blocks.AIR,
                                    world)) {
                     user.sendMessage(new TranslatableText("message.imm_ptl_surv_adapt.portal_obstructed_origin"), false);
-                    return super.useOnBlock(context);
+                    return ActionResult.FAIL;
+
                 } else if (!isAreaOfBlock(destinationBlockPos.add(truncateSafely(data.width*facingHorizontal.rotateYCounterclockwise().getVector().getX()/2),
                         1,
                         truncateSafely(data.width*facingHorizontal.rotateYCounterclockwise().getVector().getZ()/2)),
@@ -160,14 +163,15 @@ public class PortalCreatorOneWay extends Item {
                         Blocks.AIR,
                         world)) {
                     user.sendMessage(new TranslatableText("message.imm_ptl_surv_adapt.portal_obstructed_destination"), false);
-                    return super.useOnBlock(context);
+                    return ActionResult.FAIL;
+
                 }
 
 //                Vector3f facingVector = facing.getUnitVector();
 //                Portal portal = Portal.entityType.create(world);
                 Portal portal = PortalManipulation.placePortal(data.width, data.height, user);
                 if (portal == null) {
-                    return super.useOnBlock(context);
+                    return ActionResult.FAIL;
                 }
                 portal.setDestinationDimension(world.getRegistryKey());
 //                Vec3d axisH = Vec3d.of(context.getSide().getVector());
@@ -189,11 +193,13 @@ public class PortalCreatorOneWay extends Item {
                 if (!user.isCreative()) {
                     user.setStackInHand(context.getHand(), ItemStack.EMPTY);
                 }
+                return ActionResult.SUCCESS;
+
             } else {
                 user.sendMessage(new TranslatableText("message.imm_ptl_surv_adapt.destination_not_set"), false);
             }
         }
-        return super.useOnBlock(context);
+        return ActionResult.FAIL;
     }
 
     @Override

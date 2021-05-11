@@ -88,15 +88,16 @@ public class PortalCompleter extends Item {
                     portalExit.world.spawnEntity(portalExit);
                     Utils.damageIt((ServerPlayerEntity) user, hand);
                 }
-
+                return TypedActionResult.success(user.getStackInHand(hand));
             }
         } else {
             Portal portal = PortalCommand.getPlayerPointingPortalRaw(user, 1, 4.5, false).map(Pair::getFirst).orElse(null);
             if (portal == null && user.isSneaking() && hand.equals(Hand.MAIN_HAND)) {
                 CHelper.safeOpenScreenPortalCompleter(user, hand);
+                return TypedActionResult.success(user.getStackInHand(hand));
             }
         }
-        return super.use(world, user, hand);
+        return TypedActionResult.fail(user.getStackInHand(hand));
     }
 
     @Override

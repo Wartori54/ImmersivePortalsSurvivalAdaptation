@@ -35,7 +35,7 @@ public class ImmersivePortalsSurvivalAdaptationGive {
                 .then(CommandManager.literal("portal_modificator")
                 .then(CommandManager.literal("move_portal")
                         .then(CommandManager.argument("distance", DoubleArgumentType.doubleArg()).executes(context -> {
-                            Global.log("give portal modificator move");
+//                            Global.log("give portal modificator move");
 
                             ItemStack itemStack = new ItemStack(Register.PORTAL_MODIFICATOR_ITEM, 1);
                             itemStack.setTag(new PortalModificatorItem.Data(1, (float) DoubleArgumentType.getDouble(context, "distance"), 0, "0000")
