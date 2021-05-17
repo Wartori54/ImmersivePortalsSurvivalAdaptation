@@ -16,6 +16,7 @@ import net.Wartori.imm_ptl_surv_adapt.Portals.PortalMirrorWithRelativeCoordinate
 import net.Wartori.imm_ptl_surv_adapt.Portals.PortalWithRelativeCoordinates;
 import net.Wartori.imm_ptl_surv_adapt.features.NonEuclideanHouseFeature;
 import net.Wartori.imm_ptl_surv_adapt.generators.NonEuclideanHouseGenerator;
+import net.Wartori.imm_ptl_surv_adapt.status_effects.PortalByPass;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
@@ -32,10 +33,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.Potions;
 import net.minecraft.structure.StructurePieceType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.*;
@@ -83,7 +88,6 @@ public class Register {
             null,
             new ArrayList<>(),
             new ArrayList<>()
-
     );
 
     private static final ConfiguredFeature<?, ?> PORTAL_ORE_OVERWORLD = Feature.ORE
@@ -96,7 +100,8 @@ public class Register {
                     0,
                     64)))
             .spreadHorizontally()
-            .applyChance(4);
+            .applyChance(3);
+    public static final StatusEffect PORTAL_BY_PASS = new PortalByPass();
 
     protected static void registerItems() {
         Registry.register(Registry.ITEM, Utils.myId("portal_block"), new BlockItem(PORTAL_BLOCK, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)));
@@ -205,4 +210,9 @@ public class Register {
 
     }
 
+    protected static void registerStatusEffects() {
+        Registry.register(Registry.STATUS_EFFECT, Utils.myId("portal_bypass"), PORTAL_BY_PASS);
+        Registry.register(Registry.POTION, Utils.myId("portal_bypass"), new Potion("Portal bypass", new StatusEffectInstance(PORTAL_BY_PASS, 20*60*3)));
+        Registry.register(Registry.POTION, Utils.myId("portal_bypass_long"), new Potion("Portal bypass", new StatusEffectInstance(PORTAL_BY_PASS, 20*60*3*2)));
+    }
 }

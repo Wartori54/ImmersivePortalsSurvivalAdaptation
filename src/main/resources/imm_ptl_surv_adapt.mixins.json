@@ -4,7 +4,8 @@
   "package": "net.Wartori.imm_ptl_surv_adapt.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "MixinFlintAndSteel"
+    "MixinFlintAndSteel",
+    "PortalMixin"
   ],
   "client": [
     "MixinGameRenderer"

@@ -58,6 +58,7 @@ public class PortalCompleter extends Item {
         if (!world.isClient()) {
             Portal portal = PortalCommand.getPlayerPointingPortalRaw(user, 1, 4.5, false).map(Pair::getFirst).orElse(null);
             if (portal != null) {
+                int portalsCompleted = 0;
                 Data.deserialize(user.getStackInHand(hand).getOrCreateTag());
                 if (Data.portalsToComplete[0] && PortalManipulation.getPortalClutter(world,
                         portal.getOriginPos(),
@@ -68,6 +69,7 @@ public class PortalCompleter extends Item {
                     Portal portalBack = PortalManipulation.createFlippedPortal(portal, portal.entityType);
                     portalBack.world.spawnEntity(portalBack);
                     Utils.damageIt((ServerPlayerEntity) user, hand);
+                    portalsCompleted++;
                 }
                 if (Data.portalsToComplete[1] && PortalManipulation.getPortalClutter(world,
                         portal.getDestPos(),
@@ -78,6 +80,7 @@ public class PortalCompleter extends Item {
                     Portal portalExitBack = PortalManipulation.createFlippedPortal(portalExit, portal.entityType);
                     portalExitBack.world.spawnEntity(portalExitBack);
                     Utils.damageIt((ServerPlayerEntity) user, hand);
+                    portalsCompleted++;
                 }
                 if (Data.portalsToComplete[2] && PortalManipulation.getPortalClutter(world,
                         portal.getDestPos(),
@@ -87,8 +90,13 @@ public class PortalCompleter extends Item {
                     Portal portalExit = PortalManipulation.createReversePortal(portal, portal.entityType);
                     portalExit.world.spawnEntity(portalExit);
                     Utils.damageIt((ServerPlayerEntity) user, hand);
+                    portalsCompleted++;
                 }
-                return TypedActionResult.success(user.getStackInHand(hand));
+                if (portalsCompleted > 0) {
+                    return TypedActionResult.success(user.getStackInHand(hand));
+                } else {
+                    return TypedActionResult.fail(user.getStackInHand(hand));
+                }
             }
         } else {
             Portal portal = PortalCommand.getPlayerPointingPortalRaw(user, 1, 4.5, false).map(Pair::getFirst).orElse(null);
