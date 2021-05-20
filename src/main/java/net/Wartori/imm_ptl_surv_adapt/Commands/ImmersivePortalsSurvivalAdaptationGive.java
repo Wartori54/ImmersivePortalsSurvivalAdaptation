@@ -3,6 +3,7 @@ package net.Wartori.imm_ptl_surv_adapt.Commands;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.*;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.Wartori.imm_ptl_surv_adapt.Commands.ArgumentTypes.DirectionArgumentType;
 import net.Wartori.imm_ptl_surv_adapt.Global;
@@ -10,21 +11,12 @@ import net.Wartori.imm_ptl_surv_adapt.Items.*;
 import net.Wartori.imm_ptl_surv_adapt.Register;
 import net.minecraft.command.argument.BlockPosArgumentType;
 import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.command.argument.ItemStackArgument;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.command.CommandManager;
-import net.minecraft.server.command.GiveCommand;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-
-import java.util.Collection;
-import java.util.Iterator;
 
 public class ImmersivePortalsSurvivalAdaptationGive {
 
@@ -35,13 +27,13 @@ public class ImmersivePortalsSurvivalAdaptationGive {
                 .then(CommandManager.literal("portal_modificator")
                 .then(CommandManager.literal("move_portal")
                         .then(CommandManager.argument("distance", DoubleArgumentType.doubleArg()).executes(context -> {
-//                            Global.log("give portal modificator move");
+                            for (ServerPlayerEntity serverPlayerEntity : EntityArgumentType.getPlayers(context, "targets")) {
 
-                            ItemStack itemStack = new ItemStack(Register.PORTAL_MODIFICATOR_ITEM, 1);
-                            itemStack.setTag(new PortalModificatorItem.Data(1, (float) DoubleArgumentType.getDouble(context, "distance"), 0, "0000")
-                                    .serialize());
-                            execute(context.getSource(), itemStack, EntityArgumentType.getPlayers(context, "targets"), 1);
-
+                                ItemStack itemStack = new ItemStack(Register.PORTAL_MODIFICATOR_ITEM, 1);
+                                itemStack.setTag(new PortalModificatorItem.Data(1, (float) DoubleArgumentType.getDouble(context, "distance"), 0, "0000")
+                                        .serialize());
+                                serverPlayerEntity.giveItemStack(itemStack);
+                            }
                             return 1;
                         })))
                 .then(CommandManager.literal("rotate_portal")
@@ -172,54 +164,38 @@ public class ImmersivePortalsSurvivalAdaptationGive {
                                     }
                                     return 1;
                                 }))))));
+        builder.then(CommandManager.argument("targets", EntityArgumentType.players())
+            .then(CommandManager.literal("portal_wrapping_zone")
+                .then(CommandManager.literal("destination_not_set")
+                    .then(CommandManager.literal("inward")
+                        .executes(context -> givePortalWrappingZone(context, 0)))
+                    .then(CommandManager.literal("outward")
+                        .executes(context -> givePortalWrappingZone(context, 1)))
+                    .then(CommandManager.literal("both")
+                        .executes(context -> givePortalWrappingZone(context, 2))))));
         dispatcher.register(builder);
 
     }
 
-    private static int execute(ServerCommandSource source, ItemStack item, Collection<ServerPlayerEntity> targets, int count) throws CommandSyntaxException {
-        Iterator var4 = targets.iterator();
-
-        label40:
-        while(var4.hasNext()) {
-            ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity)var4.next();
-            int i = count;
-
-            while(true) {
-                while(true) {
-                    if (i <= 0) {
-                        continue label40;
-                    }
-
-                    int j = Math.min(item.getItem().getMaxCount(), i);
-                    i -= j;
-                    boolean bl = serverPlayerEntity.inventory.insertStack(item);
-                    ItemEntity itemEntity;
-                    if (bl && item.isEmpty()) {
-                        item.setCount(1);
-                        itemEntity = serverPlayerEntity.dropItem(item, false);
-                        if (itemEntity != null) {
-                            itemEntity.setDespawnImmediately();
-                        }
-
-                        serverPlayerEntity.world.playSound((PlayerEntity)null, serverPlayerEntity.getX(), serverPlayerEntity.getY(), serverPlayerEntity.getZ(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, ((serverPlayerEntity.getRandom().nextFloat() - serverPlayerEntity.getRandom().nextFloat()) * 0.7F + 1.0F) * 2.0F);
-                        serverPlayerEntity.playerScreenHandler.sendContentUpdates();
-                    } else {
-                        itemEntity = serverPlayerEntity.dropItem(item, false);
-                        if (itemEntity != null) {
-                            itemEntity.resetPickupDelay();
-                            itemEntity.setOwner(serverPlayerEntity.getUuid());
-                        }
-                    }
-                }
+    public static int givePortalWrappingZone(CommandContext<ServerCommandSource> context, int wrappingType) throws CommandSyntaxException {
+        for (ServerPlayerEntity serverPlayerEntity : EntityArgumentType.getPlayers(context,"targets")) {
+            ItemStack itemStack = new ItemStack(Register.PORTAL_WRAPPING_ZONE);
+            try {
+                itemStack.setTag(
+                        new PortalWrappingZone.Data(
+                                PortalWrappingZone.WarpingType.fromInt(wrappingType),
+                                new BlockPos(0,0,0),
+                                new BlockPos(0,0,0),
+                                false,
+                                false
+                        ).serialize());
+                serverPlayerEntity.giveItemStack(itemStack);
+            } catch (Exception ex) {
+                Global.error(ex);
             }
         }
-
-        if (targets.size() == 1) {
-            source.sendFeedback(new TranslatableText("commands.give.success.single", new Object[]{count, item.toHoverableText(), ((ServerPlayerEntity)targets.iterator().next()).getDisplayName()}), true);
-        } else {
-            source.sendFeedback(new TranslatableText("commands.give.success.single", new Object[]{count, item.toHoverableText(), targets.size()}), true);
-        }
-
-        return targets.size();
+        return 1;
     }
+
+
 }

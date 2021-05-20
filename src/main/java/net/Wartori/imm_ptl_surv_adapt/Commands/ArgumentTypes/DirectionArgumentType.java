@@ -7,6 +7,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
+import net.minecraft.command.CommandSource;
 import net.minecraft.command.argument.ItemStackArgumentType;
 import net.minecraft.server.command.GiveCommand;
 import net.minecraft.text.LiteralText;
@@ -51,14 +52,8 @@ public class DirectionArgumentType implements ArgumentType<Direction> {
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-        StringReader stringReader = new StringReader(builder.getInput());
-        stringReader.setCursor(builder.getStart());
-        for (int i = 0; i < EXAMPLES.toArray().length; i++) {
-            if (EXAMPLES.get(i).toLowerCase().contains(stringReader.getRemaining().toLowerCase())) {
-                builder.suggest(EXAMPLES.get(i).toLowerCase());
-                System.out.println(i);
-            }
-        }
-        return builder.buildFuture();
+        List<String> suggestions = new ArrayList<>(Collections.emptyList());
+        EXAMPLES.forEach(s -> suggestions.add(s.toLowerCase()));
+        return CommandSource.suggestMatching(suggestions, builder);
     }
 }

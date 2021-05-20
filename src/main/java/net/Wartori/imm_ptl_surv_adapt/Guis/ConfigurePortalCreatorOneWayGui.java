@@ -28,8 +28,6 @@ public class ConfigurePortalCreatorOneWayGui extends LightweightGuiDescription {
         WNumberField widthEntry = new WNumberField();
         widthEntry.setText(String.valueOf(tag.getInt("width")));
         widthEntry.setOnNumberTyped(((num, value) -> {
-            Global.log(num);
-            Global.log(value);
             if (value > 10) {
                 return false;
             } else {

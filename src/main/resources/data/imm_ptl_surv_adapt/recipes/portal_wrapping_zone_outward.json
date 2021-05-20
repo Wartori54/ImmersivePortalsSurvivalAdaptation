@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "OPO",
+    "PCP",
+    "OPO"
+  ],
+  "key": {
+    "O": {
+      "item": "minecraft:obsidian"
+    },
+    "P": {
+      "item": "imm_ptl_surv_adapt:portal_ingot"
+    },
+    "C": {
+      "item": "imm_ptl_surv_adapt:portal_creator_one_way"
+    }
+  },
+  "result": {
+    "item": "imm_ptl_surv_adapt:portal_wrapping_zone",
+    "data": {
+      "isValidEnd": false,
+      "isValidStart": false,
+      "warpingType": "$ (1)#i",
+      "startPos": ["$ (0)#i", "$ (0)#i", "$ (0)#i"],
+      "endPos": ["$ (0)#i", "$ (0)#i", "$ (0)#i"]
+    }
+  }
+}

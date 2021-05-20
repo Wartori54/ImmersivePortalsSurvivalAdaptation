@@ -13,7 +13,7 @@ public class Global {
     public static boolean[] portalCompleterData = new boolean[3];
     public static String MOD_ID = "imm_ptl_surv_adapt";
 
-    public static final Logger LOGGER = LogManager.getLogger("imm_ptl_surv_adapt");
+    public static final Logger LOGGER = LogManager.getLogger("IP Survival Adaptation");
 
     public static void log(Object o) {
         LOGGER.info(o);
@@ -28,7 +28,7 @@ public class Global {
     }
 
     public static void fatal(Object o) {
-        LOGGER.error(o);
+        LOGGER.fatal(o);
     }
 
 }

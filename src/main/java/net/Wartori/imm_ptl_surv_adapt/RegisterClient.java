@@ -14,7 +14,6 @@ import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 public class RegisterClient {
 
     protected static void registerEntityRenderer() {
-        Global.log("registerEntityRenderer");
 
         EntityRendererRegistry.INSTANCE.register(
                 PortalWithRelativeCoordinates.entityType,

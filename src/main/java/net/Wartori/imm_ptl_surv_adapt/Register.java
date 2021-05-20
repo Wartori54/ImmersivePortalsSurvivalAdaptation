@@ -1,14 +1,11 @@
 package net.Wartori.imm_ptl_surv_adapt;
 
 import com.qouteall.immersive_portals.portal.custom_portal_gen.CustomPortalGeneration;
-import net.Wartori.imm_ptl_surv_adapt.Blocks.PortalBlock;
-import net.Wartori.imm_ptl_surv_adapt.Blocks.PortalOre;
-import net.Wartori.imm_ptl_surv_adapt.Blocks.UsedPortalBlock;
+import net.Wartori.imm_ptl_surv_adapt.Blocks.*;
 import net.Wartori.imm_ptl_surv_adapt.Commands.ArgumentTypes.DirectionArgumentType;
 import net.Wartori.imm_ptl_surv_adapt.Commands.CreatePortalWithRelativeDestination;
 import net.Wartori.imm_ptl_surv_adapt.Commands.ImmersivePortalsSurvivalAdaptationGive;
 import net.Wartori.imm_ptl_surv_adapt.Commands.ToPortalWithRelativeCoordinates;
-import net.Wartori.imm_ptl_surv_adapt.Guis.ConfigurePortalCompleterGui;
 import net.Wartori.imm_ptl_surv_adapt.Items.*;
 import net.Wartori.imm_ptl_surv_adapt.Networking.AnalizeC2SPackets;
 import net.Wartori.imm_ptl_surv_adapt.PortalGenForm.PortalBlockForm;
@@ -19,11 +16,9 @@ import net.Wartori.imm_ptl_surv_adapt.generators.NonEuclideanHouseGenerator;
 import net.Wartori.imm_ptl_surv_adapt.status_effects.PortalByPass;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
-import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.fabricmc.fabric.api.structure.v1.FabricStructureBuilder;
 import net.minecraft.block.Block;
 
@@ -38,9 +33,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
-import net.minecraft.potion.Potions;
 import net.minecraft.structure.StructurePieceType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.*;
@@ -65,11 +58,13 @@ public class Register {
     public static final Item PORTAL_INGOT = new PortalIngot(new Item.Settings().group(RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP));
     public static final Item PORTAL_MODIFICATOR_DELETE_ITEM = new PortalModificatorDelete(new Item.Settings().group(RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP).maxCount(1));
     public static final Item PORTAL_COMPLETER_ITEM = new PortalCompleter(new Item.Settings().maxCount(1).maxDamage(12).group(RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP));
+    public static final Item PORTAL_WRAPPING_ZONE =  new PortalWrappingZone(new Item.Settings().maxCount(1).group(RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP));
 
     public static final Block PORTAL_BLOCK = new PortalBlock();
     public static final Block PORTAL_ORE = new PortalOre();
     public static final Block USED_PORTAL_BLOCK = new UsedPortalBlock();
-
+    public static final Block WRAPPING_ZONE_START = new WrappingZoneStart();
+    public static final Block WRAPPING_ZONE_END = new WrappingZoneEnd();
 
 
     public static final PortalBlockForm portalBlockForm = new PortalBlockForm();
@@ -114,13 +109,17 @@ public class Register {
         Registry.register(Registry.ITEM, Utils.myId("used_portal_block"), new BlockItem(USED_PORTAL_BLOCK, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)));
         Registry.register(Registry.ITEM, Utils.myId("portal_modificator_delete"), PORTAL_MODIFICATOR_DELETE_ITEM);
         Registry.register(Registry.ITEM, Utils.myId("portal_completer"), PORTAL_COMPLETER_ITEM);
-
+        Registry.register(Registry.ITEM, Utils.myId("wrapping_zone_start"), new BlockItem(WRAPPING_ZONE_START, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)));
+        Registry.register(Registry.ITEM, Utils.myId("wrapping_zone_end"), new BlockItem(WRAPPING_ZONE_END, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)));
+        Registry.register(Registry.ITEM, Utils.myId("portal_wrapping_zone"), PORTAL_WRAPPING_ZONE);
     }
 
     protected static void registerBlocks() {
         Registry.register(Registry.BLOCK, Utils.myId("portal_block"), PORTAL_BLOCK);
         Registry.register(Registry.BLOCK, Utils.myId("portal_ore"), PORTAL_ORE);
         Registry.register(Registry.BLOCK, Utils.myId("used_portal_block"), USED_PORTAL_BLOCK);
+        Registry.register(Registry.BLOCK, Utils.myId("wrapping_zone_start"), WRAPPING_ZONE_START);
+        Registry.register(Registry.BLOCK, Utils.myId("wrapping_zone_end"), WRAPPING_ZONE_END);
     }
 
     protected static void registerWorldGen() {
