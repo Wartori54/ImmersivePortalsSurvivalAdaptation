@@ -41,10 +41,11 @@ public class NonEuclideanHouseFeature extends StructureFeature<DefaultFeatureCon
             z += random.nextInt(16);
             int startY = chunkGenerator.getHeight(x, z, Heightmap.Type.WORLD_SURFACE_WG);
             int y = startY-20;
+            x -= 39/2;
+            y -= 20/2;
             BlockPos pos = new BlockPos(x, y, z);
             NonEuclideanHouseGenerator.addPieces(manager, pos, BlockRotation.NONE, this.children);
             this.setBoundingBoxFromChildren();
-
         }
     }
 }

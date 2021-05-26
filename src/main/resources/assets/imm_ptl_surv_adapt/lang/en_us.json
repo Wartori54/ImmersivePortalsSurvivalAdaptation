@@ -30,6 +30,7 @@
   "message.imm_ptl_surv_adapt.warping_zone_end_set": "Wrapping zone end set at: %s %s %s",
   "message.imm_ptl_surv_adapt.missing_warping_zone_blocks": "Missing start/end block",
   "message.imm_ptl_surv_adapt.wrapping_zone_too_big": "Wrapping zone is too big",
+  "message.imm_ptl_surv_adapt.warn_how_to_use": "Check the wiki of Immersive Portals Survival Adaptation: ",
   "desc.imm_ptl_surv_adapt.portal_creator_one_way": "Creates a one-way portal from an origin to a destination",
   "desc.imm_ptl_surv_adapt-portal_creator_one_way_line_2": "Shift use to set destination, use to place portal",
   "tooltip.imm_ptl_surv_adapt.increase_distance_modificator": "Increase distance by: %s",

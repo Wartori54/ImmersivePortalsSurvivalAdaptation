@@ -5,6 +5,8 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.datafixers.util.Pair;
 import com.qouteall.immersive_portals.commands.PortalCommand;
 import com.qouteall.immersive_portals.portal.Portal;
+import net.Wartori.imm_ptl_surv_adapt.ClientEvents;
+import net.Wartori.imm_ptl_surv_adapt.Guide.IPSAGuide;
 import net.Wartori.imm_ptl_surv_adapt.Items.PortalModificatorItem;
 import net.Wartori.imm_ptl_surv_adapt.Register;
 import net.Wartori.imm_ptl_surv_adapt.Utils;
@@ -37,6 +39,7 @@ public class MixinGameRenderer extends DrawableHelper {
     @Shadow private int scaledWidth;
     @Shadow private int scaledHeight;
     private static final Identifier sprite = new Identifier("imm_ptl_surv_adapt:textures/hud/overlay_direction.png");
+    private boolean worldOpen = false;
 
     @Inject(method = "renderHotbar", at = @At("RETURN"))
     public void onRender(float f, MatrixStack matrixStack, CallbackInfo info) {
@@ -80,6 +83,17 @@ public class MixinGameRenderer extends DrawableHelper {
 
                 textRenderer.drawWithShadow(matrixStack, new TranslatableText("info.imm_ptl_surv_adapt.rotate", actionType, axisDirection, facing.getAxis().asString()), this.scaledWidth/2f-62, this.scaledHeight/4f+5, 0xFFFFFFFF);
             }
+        }
+    }
+
+    @Inject(method = "render", at = @At(value = "HEAD"))
+    private void beforeRendering(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
+        if (client.world != null) {
+            if (!worldOpen)
+                ClientEvents.onWorldOpen();
+            worldOpen = true;
+        } else {
+            worldOpen = false;
         }
     }
 }

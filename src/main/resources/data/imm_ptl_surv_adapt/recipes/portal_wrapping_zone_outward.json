@@ -21,9 +21,9 @@
     "data": {
       "isValidEnd": false,
       "isValidStart": false,
-      "warpingType": "$ (1)#i",
-      "startPos": ["$ (0)#i", "$ (0)#i", "$ (0)#i"],
-      "endPos": ["$ (0)#i", "$ (0)#i", "$ (0)#i"]
+      "warpingType": 1,
+      "startPos": [0, 0, 0],
+      "endPos": [0, 0, 0]
     }
   }
 }

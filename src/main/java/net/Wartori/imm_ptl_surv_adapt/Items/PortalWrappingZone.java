@@ -75,12 +75,21 @@ public class PortalWrappingZone extends Item {
                         tag.getBoolean("isValidEnd")
                 );
             } catch (ArrayIndexOutOfBoundsException ignored) {
-                Global.warn("portal warping zone with invalid data");
-                return new Data(WarpingType.IN,
-                        new BlockPos(0,0,0),
-                        new BlockPos(0,0,0),
-                        false,
-                        false);
+//                Global.warn("portal warping zone with invalid array");
+                try {
+                    return new Data(WarpingType.fromInt(tag.getInt("warpingType")),
+                            new BlockPos(0, 0, 0),
+                            new BlockPos(0, 0, 0),
+                            false,
+                            false);
+                } catch (ClassCastException ignored1) {
+                    Global.warn("portal warping zone with invalid data");
+                    return new Data(WarpingType.IN,
+                            new BlockPos(0, 0, 0),
+                            new BlockPos(0, 0, 0),
+                            false,
+                            false);
+                }
             }
         }
     }
@@ -95,10 +104,10 @@ public class PortalWrappingZone extends Item {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        CompoundTag tag = stack.getTag();
-        if (tag == null) {
-            tag = new Data(WarpingType.IN, new BlockPos(0,0,0), new BlockPos(0,0,0), false, false).serialize();
-        }
+        CompoundTag tag = stack.getOrCreateTag();
+//        if (tag == null) {
+//            tag = new Data(WarpingType.IN, new BlockPos(0,0,0), new BlockPos(0,0,0), false, false).serialize();
+//        }
         Data data = Data.deserialize(tag);
         tooltip.add(new TranslatableText("tooltip.imm_ptl_surv_adapt.portal_wrapping_zone_desc"));
         tooltip.add(new TranslatableText("tooltip.imm_ptl_surv_adapt.portal_wrapping_zone_desc1"));
@@ -276,6 +285,7 @@ public class PortalWrappingZone extends Item {
             } else if (i == 2) {
                 return BOTH;
             }
+            Global.warn("Invalid mode");
             return IN;
         }
     }

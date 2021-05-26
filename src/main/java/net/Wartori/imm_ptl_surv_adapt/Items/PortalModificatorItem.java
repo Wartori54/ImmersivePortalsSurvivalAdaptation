@@ -1,7 +1,5 @@
 package net.Wartori.imm_ptl_surv_adapt.Items;
 
-import com.mojang.datafixers.util.Pair;
-import com.qouteall.immersive_portals.commands.PortalCommand;
 import com.qouteall.immersive_portals.portal.Portal;
 import com.qouteall.immersive_portals.portal.PortalManipulation;
 import net.Wartori.imm_ptl_surv_adapt.CHelper;
