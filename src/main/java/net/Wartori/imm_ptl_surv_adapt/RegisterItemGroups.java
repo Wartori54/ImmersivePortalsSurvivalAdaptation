@@ -1,6 +1,5 @@
 package net.Wartori.imm_ptl_surv_adapt;
 
-import net.Wartori.imm_ptl_surv_adapt.Items.PortalModificatorItem;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;

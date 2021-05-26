@@ -7,7 +7,7 @@ import net.Wartori.imm_ptl_surv_adapt.Commands.CreatePortalWithRelativeDestinati
 import net.Wartori.imm_ptl_surv_adapt.Commands.ImmersivePortalsSurvivalAdaptationGive;
 import net.Wartori.imm_ptl_surv_adapt.Commands.ToPortalWithRelativeCoordinates;
 import net.Wartori.imm_ptl_surv_adapt.Items.*;
-import net.Wartori.imm_ptl_surv_adapt.Networking.AnalizeC2SPackets;
+import net.Wartori.imm_ptl_surv_adapt.Networking.AnalyzeC2SPackets;
 import net.Wartori.imm_ptl_surv_adapt.PortalGenForm.PortalBlockForm;
 import net.Wartori.imm_ptl_surv_adapt.Portals.PortalMirrorWithRelativeCoordinates;
 import net.Wartori.imm_ptl_surv_adapt.Portals.PortalWithRelativeCoordinates;
@@ -47,7 +47,6 @@ import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public class Register {
 
@@ -59,6 +58,8 @@ public class Register {
     public static final Item PORTAL_MODIFICATOR_DELETE_ITEM = new PortalModificatorDelete(new Item.Settings().group(RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP).maxCount(1));
     public static final Item PORTAL_COMPLETER_ITEM = new PortalCompleter(new Item.Settings().maxCount(1).maxDamage(12).group(RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP));
     public static final Item PORTAL_WRAPPING_ZONE =  new PortalWrappingZone(new Item.Settings().maxCount(1).group(RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP));
+    public static final Item PORTAL_CLAIMER_ITEM = new PortalClaimer(new Item.Settings().maxCount(1).group(RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP));
+    public static final Item PORTAL_DISCLAIMER_ITEM = new PortalDisclaimer(new Item.Settings().maxCount(1).group(RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP));
 
     public static final Block PORTAL_BLOCK = new PortalBlock();
     public static final Block PORTAL_ORE = new PortalOre();
@@ -112,6 +113,8 @@ public class Register {
         Registry.register(Registry.ITEM, Utils.myId("wrapping_zone_start"), new BlockItem(WRAPPING_ZONE_START, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)));
         Registry.register(Registry.ITEM, Utils.myId("wrapping_zone_end"), new BlockItem(WRAPPING_ZONE_END, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)));
         Registry.register(Registry.ITEM, Utils.myId("portal_wrapping_zone"), PORTAL_WRAPPING_ZONE);
+        Registry.register(Registry.ITEM, Utils.myId("portal_claimer"), PORTAL_CLAIMER_ITEM);
+        Registry.register(Registry.ITEM, Utils.myId("portal_disclaimer"), PORTAL_DISCLAIMER_ITEM);
     }
 
     protected static void registerBlocks() {
@@ -142,18 +145,13 @@ public class Register {
     }
 
     protected static void registerEntity() {
-        DefaultedRegistry<EntityType<?>> registry = Registry.ENTITY_TYPE;
         registerEntity(o -> PortalWithRelativeCoordinates.entityType = o,
-                () -> PortalWithRelativeCoordinates.entityType,
                 "imm_ptl_surv_adapt:portal_with_relative_destination",
-                PortalWithRelativeCoordinates::new,
-                registry
+                PortalWithRelativeCoordinates::new
         );
         registerEntity(o -> PortalMirrorWithRelativeCoordinates.entityType = o,
-                () -> PortalMirrorWithRelativeCoordinates.entityType,
                 "imm_plt_surv_adapt:mirror_with_relative_destination",
-                PortalMirrorWithRelativeCoordinates::new,
-                registry);
+                PortalMirrorWithRelativeCoordinates::new);
 
     }
 
@@ -183,17 +181,19 @@ public class Register {
      */
     private static <T extends Entity> void registerEntity(
             Consumer<EntityType<T>> setEntityType,
-            Supplier<EntityType<T>> getEntityType,
             String id,
-            EntityType.EntityFactory<T> constructor,
-            Registry<EntityType<?>> registry
+            EntityType.EntityFactory<T> constructor
     ) {
         EntityType<T> entityType = FabricEntityTypeBuilder.create(
                 SpawnGroup.MISC,
                 constructor
         ).dimensions(
                 new EntityDimensions(1, 1, true)
-        ).fireImmune().trackable(96, 20).build();
+        ).fireImmune()
+                .trackRangeBlocks(96)
+                .trackedUpdateRate(20)
+                .forceTrackedVelocityUpdates(true)
+                .build();
         setEntityType.accept(entityType);
         Registry.register(
                 Registry.ENTITY_TYPE,
@@ -203,9 +203,9 @@ public class Register {
     }
 
     protected static void registerPackets() {
-        ServerPlayNetworking.registerGlobalReceiver(Utils.myId("update_portal_modificator"), (AnalizeC2SPackets::executePacketUpdatePortalModificator));
-        ServerPlayNetworking.registerGlobalReceiver(Utils.myId("update_portal_creator"), (AnalizeC2SPackets::executePacketUpdatePortalCreator));
-        ServerPlayNetworking.registerGlobalReceiver(Utils.myId("update_portal_completer"), (AnalizeC2SPackets::executePacketUpdatePortalCompleter));
+        ServerPlayNetworking.registerGlobalReceiver(Utils.myId("update_portal_modificator"), (AnalyzeC2SPackets::executePacketUpdatePortalModificator));
+        ServerPlayNetworking.registerGlobalReceiver(Utils.myId("update_portal_creator"), (AnalyzeC2SPackets::executePacketUpdatePortalCreator));
+        ServerPlayNetworking.registerGlobalReceiver(Utils.myId("update_portal_completer"), (AnalyzeC2SPackets::executePacketUpdatePortalCompleter));
 
     }
 

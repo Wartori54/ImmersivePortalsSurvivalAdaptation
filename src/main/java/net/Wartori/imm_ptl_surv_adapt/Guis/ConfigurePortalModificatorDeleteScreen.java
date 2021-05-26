@@ -18,7 +18,6 @@ public class ConfigurePortalModificatorDeleteScreen extends CottonClientScreen {
 
     @Override
     public boolean keyPressed(int ch, int keyCode, int modifiers) {
-        //System.out.println("Key " + Integer.toHexString(ch)+" "+Integer.toHexString(keyCode));
         if (ch == GLFW.GLFW_KEY_ESCAPE) {
             this.client.player.closeHandledScreen();
             onScreenClosed();

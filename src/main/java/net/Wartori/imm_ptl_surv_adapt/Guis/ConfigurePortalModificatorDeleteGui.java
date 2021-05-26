@@ -13,10 +13,8 @@ public class ConfigurePortalModificatorDeleteGui extends LightweightGuiDescripti
         WGridPanel root = new WGridPanel();
         setRootPanel(root);
         root.setSize((int) (256*1.25), 100);
-//        ItemStack stack = ItemStack.EMPTY;
-//        System.out.println(stack);
-        boolean[] facesToDelete = PortalModificatorItem.decodeFacesToDelete(stack.getTag().getString("facesToDelete"));
-        Global.finalState = stack.getTag().getString("facesToDelete");
+        boolean[] facesToDelete = PortalModificatorItem.decodeFacesToDelete(stack.getOrCreateTag().getString("facesToDelete"));
+        Global.finalState = stack.getOrCreateTag().getString("facesToDelete");
         Global.portalModificatorC2S = stack;
 
         WToggleButton intPortal = new WToggleButton(new TranslatableText("tooltip.imm_ptl_surv_adapt.remove_portal_0", ""));

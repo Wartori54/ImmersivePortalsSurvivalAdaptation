@@ -173,6 +173,24 @@ public class ImmersivePortalsSurvivalAdaptationGive {
                         .executes(context -> givePortalWrappingZone(context, 1)))
                     .then(CommandManager.literal("both")
                         .executes(context -> givePortalWrappingZone(context, 2))))));
+        builder.then(CommandManager.argument("targets", EntityArgumentType.players())
+            .then(CommandManager.literal("portal_claimer"))
+                .executes(context -> {
+                    for (ServerPlayerEntity serverPlayerEntity : EntityArgumentType.getPlayers(context, "targets")) {
+                        ItemStack itemStack = new ItemStack(Register.PORTAL_CLAIMER_ITEM);
+                        serverPlayerEntity.giveItemStack(itemStack);
+                    }
+                    return 1;
+                }));
+        builder.then(CommandManager.argument("targets", EntityArgumentType.players())
+                .then(CommandManager.literal("portal_claimer"))
+                .executes(context -> {
+                    for (ServerPlayerEntity serverPlayerEntity : EntityArgumentType.getPlayers(context, "targets")) {
+                        ItemStack itemStack = new ItemStack(Register.PORTAL_DISCLAIMER_ITEM);
+                        serverPlayerEntity.giveItemStack(itemStack);
+                    }
+                    return 1;
+                }));
         dispatcher.register(builder);
 
     }

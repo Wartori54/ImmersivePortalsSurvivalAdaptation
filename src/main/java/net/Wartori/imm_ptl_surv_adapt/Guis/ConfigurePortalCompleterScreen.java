@@ -9,7 +9,6 @@ import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
 public class ConfigurePortalCompleterScreen extends CottonClientScreen {

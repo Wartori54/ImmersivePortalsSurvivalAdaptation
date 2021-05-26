@@ -42,8 +42,6 @@ public class ToPortalWithRelativeCoordinates {
             portal.remove();
             newPortal.setUuid(newUuid);
             newPortal.world.spawnEntity(newPortal);
-//            System.out.println(newPortal.getPos());
-//        System.out.println(portalTag);
         } else {
             PortalWithRelativeCoordinates newPortal = PortalWithRelativeCoordinates.entityType.create(context.getSource().getWorld());
             UUID newUuid = newPortal.getUuid();
@@ -55,8 +53,6 @@ public class ToPortalWithRelativeCoordinates {
             portal.remove();
             newPortal.setUuid(newUuid);
             newPortal.world.spawnEntity(newPortal);
-//            System.out.println(newPortal.getPos());
-//        System.out.println(portalTag);
 
         }
         return 1;

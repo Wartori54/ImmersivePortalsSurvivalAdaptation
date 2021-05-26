@@ -15,7 +15,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
-import org.lwjgl.system.CallbackI;
 
 public class WrappingZoneStart extends FacingBlock implements Waterloggable {
     public static final BooleanProperty WATERLOGGED = BooleanProperty.of("waterlogged");

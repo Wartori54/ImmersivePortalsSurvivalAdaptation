@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:nether_wart"
+    },
+    {
+      "item": "imm_ptl_surv_adapt:portal_claimer"
+    }
+  ],
+  "result": {
+    "item": "imm_ptl_surv_adapt:portal_disclaimer"
+  }
+}

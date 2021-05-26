@@ -1,6 +1,5 @@
 package net.Wartori.imm_ptl_surv_adapt.Networking;
 
-import net.Wartori.imm_ptl_surv_adapt.Global;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
@@ -9,11 +8,9 @@ import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Hand;
 
-public class AnalizeC2SPackets {
+public class AnalyzeC2SPackets {
     public static void executePacketUpdatePortalModificator(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
         ItemStack stack = buf.readItemStack();
-//        Global.log(stack.getOrCreateTag());
-//        System.out.println(stack.getTag().getString("facesToDelete"));
         player.setStackInHand(Hand.MAIN_HAND, stack);
     }
 

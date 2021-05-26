@@ -1,14 +1,15 @@
 package net.Wartori.imm_ptl_surv_adapt.Items;
 
-import com.qouteall.immersive_portals.Helper;
 import com.qouteall.immersive_portals.portal.Portal;
 import com.qouteall.immersive_portals.portal.PortalManipulation;
 import com.qouteall.immersive_portals.portal.global_portals.WorldWrappingPortal;
 import net.Wartori.imm_ptl_surv_adapt.Global;
 import net.Wartori.imm_ptl_surv_adapt.Register;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.CompoundTag;
@@ -17,17 +18,14 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Pair;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.lwjgl.system.CallbackI;
 
 import java.util.List;
 
@@ -97,10 +95,31 @@ public class PortalWrappingZone extends Item {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        Data data = Data.deserialize(stack.getOrCreateTag());
+        CompoundTag tag = stack.getTag();
+        if (tag == null) {
+            tag = new Data(WarpingType.IN, new BlockPos(0,0,0), new BlockPos(0,0,0), false, false).serialize();
+        }
+        Data data = Data.deserialize(tag);
         tooltip.add(new TranslatableText("tooltip.imm_ptl_surv_adapt.portal_wrapping_zone_desc"));
         tooltip.add(new TranslatableText("tooltip.imm_ptl_surv_adapt.portal_wrapping_zone_desc1"));
         tooltip.add(new TranslatableText("tooltip.imm_ptl_surv_adapt.portal_wrapping_zone_type", data.warpingType));
+    }
+
+    @Override
+    public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
+        if (this.isIn(group)) {
+            ItemStack stackIn = new ItemStack(this);
+            stackIn.setTag(new Data(WarpingType.IN, new BlockPos(0,0,0), new BlockPos(0,0,0), false, false).serialize());
+            stacks.add(stackIn);
+
+            ItemStack stackOut = new ItemStack(this);
+            stackOut.setTag(new Data(WarpingType.OUT, new BlockPos(0,0,0), new BlockPos(0,0,0), false, false).serialize());
+            stacks.add(stackOut);
+
+            ItemStack stackBoth = new ItemStack(this);
+            stackBoth.setTag(new Data(WarpingType.BOTH, new BlockPos(0,0,0), new BlockPos(0,0,0), false, false).serialize());
+            stacks.add(stackBoth);
+        }
     }
 
     @Override
@@ -164,6 +183,8 @@ public class PortalWrappingZone extends Item {
                         return ActionResult.FAIL;
                     }
                     createWarpingBox(data.warpingType, data.startPos, data.endPos, (ServerWorld) context.getWorld());
+                    context.getWorld().breakBlock(data.startPos, false);
+                    context.getWorld().breakBlock(data.endPos, false);
                     if (!context.getPlayer().isCreative())
                         context.getStack().setCount(0);
                     return ActionResult.SUCCESS;
@@ -176,6 +197,7 @@ public class PortalWrappingZone extends Item {
     }
 
     public static void createWarpingBox(WarpingType warpingType, BlockPos start, BlockPos end, ServerWorld world) {
+
         Box box = createBox(start, end);
         for (Direction direction:
              Direction.values()) {

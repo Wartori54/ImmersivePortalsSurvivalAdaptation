@@ -11,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Portal.class)
 public class PortalMixin {
-
     @Inject(method = "canTeleportEntity", at = @At(value = "HEAD"), cancellable = true, remap = false)
     public void canTeleportEntityWithEffect(Entity entity, CallbackInfoReturnable<Boolean> cir) {
         if (entity instanceof LivingEntity) {

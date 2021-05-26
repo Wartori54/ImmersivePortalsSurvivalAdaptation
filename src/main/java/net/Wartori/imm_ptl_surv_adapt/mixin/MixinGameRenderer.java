@@ -7,6 +7,7 @@ import com.qouteall.immersive_portals.commands.PortalCommand;
 import com.qouteall.immersive_portals.portal.Portal;
 import net.Wartori.imm_ptl_surv_adapt.Items.PortalModificatorItem;
 import net.Wartori.imm_ptl_surv_adapt.Register;
+import net.Wartori.imm_ptl_surv_adapt.Utils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -30,7 +31,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 @Environment(EnvType.CLIENT)
 @Mixin(InGameHud.class)
-public class MixinGameRenderer extends DrawableHelper{
+public class MixinGameRenderer extends DrawableHelper {
 
     @Shadow @Final private MinecraftClient client;
     @Shadow private int scaledWidth;
@@ -39,28 +40,14 @@ public class MixinGameRenderer extends DrawableHelper{
 
     @Inject(method = "renderHotbar", at = @At("RETURN"))
     public void onRender(float f, MatrixStack matrixStack, CallbackInfo info) {
-//        System.out.println("i");
-        if (MinecraftClient.getInstance().player.isHolding(Register.PORTAL_MODIFICATOR_ITEM)) {
-            Portal portal = PortalCommand.getPlayerPointingPortalRaw(MinecraftClient.getInstance().player, 1, 4.5, true)
-                    .map(Pair::getFirst).orElse(null);
+        if (client.player.isHolding(Register.PORTAL_MODIFICATOR_ITEM)) {
+            Portal portal = Utils.getPortalPlayerPointing(client.player, true);
             if (portal != null) {
                 Vec3d viewVec = client.player.getRotationVector();
                 Direction facing = Direction.getFacing(viewVec.x, viewVec.y, viewVec.z);
-//                Tessellator tessellator = Tessellator.getInstance();
-//                BufferBuilder bufferBuilder = tessellator.getBuffer();
-//                bufferBuilder.begin(7, VertexFormats.POSITION_COLOR);
-//                bufferBuilder.vertex(200, 100, 0.0).color(255, 255, 255, 255).next();
-//                bufferBuilder.vertex(100, 100, 0.0).color(255, 255, 255, 255).next();
-//                bufferBuilder.vertex(100, 200, 0.0).color(255, 255, 255, 255).next();
-//                bufferBuilder.vertex(200, 200, 0.0).color(255, 255, 255, 255).next();
-//                Sprite background = MinecraftClient.getInstance().getSpriteAtlas(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE).apply(new Identifier("imm_ptl_surv_adapt", "textures/hud/overlay_direction.png"));
-//                RenderSystem.disableLighting();
                 String actionType;
-                AtomicReference<ItemStack> stack = new AtomicReference<ItemStack>();
+                AtomicReference<ItemStack> stack = new AtomicReference<>();
                 stack.set(ItemStack.EMPTY);
-//                if (client.player.getItemsHand().iterator().next() != Register.PORTAL_MODIFICATOR_ITEM.getDefaultStack()) {
-//                    stack = client.player.getItemsHand().iterator().next();
-//                }
                 client.player.getItemsHand().iterator().forEachRemaining(itemStack -> {
                     if (itemStack.getItem() == Register.PORTAL_MODIFICATOR_ITEM) {
                         stack.set(itemStack);
@@ -79,25 +66,11 @@ public class MixinGameRenderer extends DrawableHelper{
                 }
                 RenderSystem.color4f(1.0f,1.0f,1.0f,1.0f);
                 RenderSystem.enableBlend();
-//                System.out.println(sprite);
                 this.client.getTextureManager().bindTexture(sprite);
                 this.drawTexture(matrixStack, this.scaledWidth/2-66, scaledHeight/4, 0, 0, 132, 25);
                 RenderSystem.disableBlend();
                 TextRenderer textRenderer = client.textRenderer;
                 String axisDirection;
-//                if (facing.getUnitVector().equals(Vector3f.POSITIVE_X)) {
-//                    axisDirection = "+";
-//                } else if (facing.getUnitVector().equals(Vector3f.NEGATIVE_X)) {
-//                    axisDirection = "-";
-//                } else if (facing.getUnitVector().equals(Vector3f.POSITIVE_Y)) {
-//                    axisDirection = "+";
-//                } else if (facing.getUnitVector().equals(Vector3f.NEGATIVE_Y)) {
-//                    axisDirection = "-";
-//                } else if (facing.getUnitVector().equals(Vector3f.POSITIVE_Z)) {
-//                    axisDirection = "+";
-//                } else if (facing.getUnitVector().equals(Vector3f.NEGATIVE_Z)) {
-//                    axisDirection = "-";
-//                }
 
                 if (facing.getDirection().equals(Direction.AxisDirection.POSITIVE)) {
                     axisDirection = "+";
@@ -105,9 +78,7 @@ public class MixinGameRenderer extends DrawableHelper{
                     axisDirection = "-";
                 }
 
-                textRenderer.drawWithShadow(matrixStack, new TranslatableText("info.imm_ptl_surv_adapt.rotate", actionType, axisDirection, facing.getAxis().asString()), this.scaledWidth/2-62, this.scaledHeight/4+5, 0xFFFFFFFF);
-//        bufferBuilder.end();
-//                tessellator.draw();
+                textRenderer.drawWithShadow(matrixStack, new TranslatableText("info.imm_ptl_surv_adapt.rotate", actionType, axisDirection, facing.getAxis().asString()), this.scaledWidth/2f-62, this.scaledHeight/4f+5, 0xFFFFFFFF);
             }
         }
     }

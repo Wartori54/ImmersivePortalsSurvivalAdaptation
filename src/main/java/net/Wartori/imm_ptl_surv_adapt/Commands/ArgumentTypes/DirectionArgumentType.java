@@ -8,8 +8,6 @@ import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import net.minecraft.command.CommandSource;
-import net.minecraft.command.argument.ItemStackArgumentType;
-import net.minecraft.server.command.GiveCommand;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.Direction;
 
@@ -28,14 +26,14 @@ public class DirectionArgumentType implements ArgumentType<Direction> {
     public static final List<String> EXAMPLES = Arrays.asList("UP", "DOWN", "EAST", "WEST", "NORTH", "SOUTH");
     @Override
     public Direction parse(StringReader reader) throws CommandSyntaxException {
-        int argBegining = reader.getCursor();
+        int argBeginning = reader.getCursor();
         if (!reader.canRead()) {
             reader.skip();
         }
         while (reader.canRead() && reader.peek() != ' ') { // peek provides the character at the current cursor position.
             reader.skip(); // Tells the StringReader to move it's cursor to the next position.
         }
-        String directionString = reader.getString().substring(argBegining, reader.getCursor());
+        String directionString = reader.getString().substring(argBeginning, reader.getCursor());
         try {
             Direction direction = Direction.valueOf(directionString.toUpperCase());
             return direction;

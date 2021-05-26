@@ -1,18 +1,12 @@
 package net.Wartori.imm_ptl_surv_adapt.Guis;
 
-import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
 import io.github.cottonmc.cotton.gui.client.LightweightGuiDescription;
 import io.github.cottonmc.cotton.gui.widget.WGridPanel;
-import io.github.cottonmc.cotton.gui.widget.WItemSlot;
 import io.github.cottonmc.cotton.gui.widget.WToggleButton;
 import net.Wartori.imm_ptl_surv_adapt.Global;
-import net.Wartori.imm_ptl_surv_adapt.Register;
 import net.Wartori.imm_ptl_surv_adapt.Utils;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.text.TranslatableText;
 
 public class ConfigurePortalCompleterGui extends LightweightGuiDescription {

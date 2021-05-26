@@ -6,6 +6,7 @@ import com.qouteall.immersive_portals.portal.Portal;
 import com.qouteall.immersive_portals.portal.PortalManipulation;
 import net.Wartori.imm_ptl_surv_adapt.CHelper;
 import net.Wartori.imm_ptl_surv_adapt.Register;
+import net.Wartori.imm_ptl_surv_adapt.Utils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
@@ -151,8 +152,7 @@ public class PortalModificatorItem extends Item {
         Data data = Data.deserialize(user.getStackInHand(hand).getOrCreateTag());
         if (!world.isClient()) {
 //            System.out.println(encodeFacesToDelete(new int[]{1, 2, 2, 2}, "0101"));
-            Portal portal = PortalCommand.getPlayerPointingPortalRaw(user, 1, 4.5, true)
-                    .map(Pair::getFirst).orElse(null);
+            Portal portal = Utils.getPortalPlayerPointing(user, true);
             if (portal != null) {
                 if (data.type == 1) {
 
@@ -210,8 +210,6 @@ public class PortalModificatorItem extends Item {
                                 portalNbt1.putBoolean("adjustPositionAfterTeleport", true);
                                 e.fromTag(portalNbt1);
                                 e.reloadAndSyncToClient();
-//                                portalsRotated.getAndIncrement();
-//                                System.out.println("Rotated destpos, normal 1 " + facing + " " + Direction.getFacing(e.getNormal().x, e.getNormal().y, e.getNormal().z));
                             });
                     //destination portal of the interacted one
                     PortalManipulation.getPortalClutter(world, portal.getDestPos(), portal.transformLocalVecNonScale(portal.getNormal().multiply(-1)),  p -> Objects.equals(p.specificPlayerId, portal.specificPlayerId) && portal.getDiscriminator() != (p.getDiscriminator()))
@@ -238,8 +236,6 @@ public class PortalModificatorItem extends Item {
                                 e.fromTag(portalNbt1);
 
                                 e.reloadAndSyncToClient();
-//                                portalsRotated.getAndIncrement();
-//                                System.out.println("Rotated destpos, normal -1");
 
                             });
                     //opposite portal of the interacted one
@@ -256,30 +252,15 @@ public class PortalModificatorItem extends Item {
                                 portalNbt1.putBoolean("adjustPositionAfterTeleport", true);
                                 e.fromTag(portalNbt1);
                                 e.reloadAndSyncToClient();
-//                                portalsRotated.getAndIncrement();
-//                                System.out.println("Rotated originpos, normal -1");
 
                             });
                     //interacted portal
-                    if (facing == Direction.getFacing(portal.getNormal().x, portal.getNormal().y, portal.getNormal().z)) {
-                        if (portal.rotation != null) {
-                            portal.rotation.hamiltonProduct(rotation);
-                        } else {
-                            portal.rotation = rotation;
-                        }
-                        PortalManipulation.rotatePortalBody(portal, rotationOtherWay);
-//                        System.out.println("2");
-
+                    if (portal.rotation != null) {
+                        portal.rotation.hamiltonProduct(rotation);
                     } else {
-                        if (portal.rotation != null) {
-                            portal.rotation.hamiltonProduct(rotation);
-                        } else {
-                            portal.rotation = rotation;
-                        }
-                        PortalManipulation.rotatePortalBody(portal, rotationOtherWay);
-//                        System.out.println("1");
-
+                        portal.rotation = rotation;
                     }
+                    PortalManipulation.rotatePortalBody(portal, rotationOtherWay);
 
                     CompoundTag portalNbt = portal.toTag(new CompoundTag());
                     portalNbt.putBoolean("adjustPositionAfterTeleport", true);
@@ -288,9 +269,6 @@ public class PortalModificatorItem extends Item {
                     damageIt((ServerPlayerEntity) user, hand);
                     return TypedActionResult.success(user.getStackInHand(hand));
 
-//                    System.out.println("Rotated originpos, normal 1");
-//                    System.out.println(portal.axisW.toString()+ " " + portal.axisH.toString());
-//                    System.out.println(PortalManipulation.getPortalOrientationQuaternion(portal.axisW, portal.axisH) + " " + facing.getUnitVector());
                 } else if (data.type == 3) {
                     if (!user.isSneaking()) {
                         boolean[] facesToDeleteDecoded = decodeFacesToDelete(data.facesToDelete);

@@ -140,8 +140,6 @@ public class PortalCreatorOneWay extends Item {
 
                 Vec3d viewVector = user.getRotationVector();
                 Direction facingHorizontal = Direction.getFacing(viewVector.x, 0, viewVector.z);
-//                System.out.println(facingHorizontal);
-//                System.out.println(facing.getUnitVector());
                 BlockPos destinationBlockPos = new BlockPos(data.destination.x, data.destination.y, data.destination.z);
                 if (!isAreaOfBlock(context.getBlockPos().add(truncateSafely(data.width*facingHorizontal.rotateYCounterclockwise().getVector().getX()/2),
                                                              1,
@@ -167,24 +165,13 @@ public class PortalCreatorOneWay extends Item {
 
                 }
 
-//                Vector3f facingVector = facing.getUnitVector();
-//                Portal portal = Portal.entityType.create(world);
                 Portal portal = PortalManipulation.placePortal(data.width, data.height, user);
                 if (portal == null) {
                     return ActionResult.FAIL;
                 }
                 portal.setDestinationDimension(world.getRegistryKey());
-//                Vec3d axisH = Vec3d.of(context.getSide().getVector());
                 Vec3d axisH2 = Vec3d.of(Direction.valueOf(data.side.toUpperCase()).getVector());
                 portal.setDestination(data.destination.add(0.5,0.5,0.5).add(axisH2.multiply(0.5 + data.height / 2.0)));
-//                portal.setOriginPos(Vec3d.ofCenter(context.getBlockPos())
-//                        .add(axisH.multiply(0.5 + width / 2.0)));
-//                portal.setOrientationAndSize(
-//                        axisH.crossProduct(Vec3d.of(facing.getOpposite().getVector())),
-//                        axisH,
-//                        width,
-//                        height
-//                );
                 world.spawnEntity(portal);
                 if (data.biFaced) {
                     Portal portalFlipped = PortalManipulation.createFlippedPortal(portal, Portal.entityType);

@@ -19,13 +19,11 @@ import net.minecraft.util.Hand;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 public class PortalCompleter extends Item {
     public PortalCompleter(Settings settings) {
@@ -56,7 +54,7 @@ public class PortalCompleter extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (!world.isClient()) {
-            Portal portal = PortalCommand.getPlayerPointingPortalRaw(user, 1, 4.5, false).map(Pair::getFirst).orElse(null);
+            Portal portal = Utils.getPortalPlayerPointing(user, false);
             if (portal != null) {
                 int portalsCompleted = 0;
                 Data.deserialize(user.getStackInHand(hand).getOrCreateTag());
@@ -99,7 +97,7 @@ public class PortalCompleter extends Item {
                 }
             }
         } else {
-            Portal portal = PortalCommand.getPlayerPointingPortalRaw(user, 1, 4.5, false).map(Pair::getFirst).orElse(null);
+            Portal portal = Utils.getPortalPlayerPointing(user, true);
             if (portal == null && user.isSneaking() && hand.equals(Hand.MAIN_HAND)) {
                 CHelper.safeOpenScreenPortalCompleter(user, hand);
                 return TypedActionResult.success(user.getStackInHand(hand));
