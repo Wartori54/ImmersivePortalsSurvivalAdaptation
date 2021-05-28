@@ -5,7 +5,6 @@ import com.qouteall.immersive_portals.commands.PortalCommand;
 import com.qouteall.immersive_portals.portal.Portal;
 import com.qouteall.immersive_portals.portal.PortalManipulation;
 import net.Wartori.imm_ptl_surv_adapt.miscellaneous.Quartet;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -71,9 +70,5 @@ public class Utils {
         List<Portal> portals3 = PortalManipulation.getPortalClutter(portal.world, portal.getDestPos(), portal.transformLocalVecNonScale(portal.getNormal()), p -> true);
         List<Portal> portals4 = PortalManipulation.getPortalClutter(portal.world, portal.getDestPos(), portal.transformLocalVecNonScale(portal.getNormal().multiply(-1)), p -> true);
         return Quartet.of(portals1, portals2, portals3, portals4);
-    }
-
-    public static void spawnEntity(Entity e) {
-        e.world.spawnEntity(e);
     }
 }

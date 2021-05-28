@@ -94,9 +94,13 @@ public class PortalModificatorItem extends Item {
                 boolean[] out = decodeFacesToDelete(dataItem.facesToDelete);
                 for (int i = 0; i < 4; i++) {
                     if (out[i]) {
-                        tooltip.add(i + 2, new TranslatableText("tooltip.imm_ptl_surv_adapt.remove_portal_" + i, ""));
+                        tooltip.add(i + 2,
+                                new TranslatableText("tooltip.imm_ptl_surv_adapt.remove_portal_" + i,
+                                        ""));
                     } else {
-                        tooltip.add(i + 2, new TranslatableText("tooltip.imm_ptl_surv_adapt.remove_portal_" + i, new TranslatableText("word.imm_ptl_surv_adapt.not")));
+                        tooltip.add(i + 2,
+                                new TranslatableText("tooltip.imm_ptl_surv_adapt.remove_portal_" + i,
+                                        new TranslatableText("word.imm_ptl_surv_adapt.not")));
                     }
                 }
             } else {

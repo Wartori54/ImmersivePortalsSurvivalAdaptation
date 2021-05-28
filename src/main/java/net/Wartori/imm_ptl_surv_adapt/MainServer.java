@@ -6,7 +6,7 @@ import net.fabricmc.api.DedicatedServerModInitializer;
 public class MainServer implements DedicatedServerModInitializer {
     @Override
     public void onInitializeServer() {
-         Global.log("Dedicated Server init");
+        Global.log("Dedicated Server init");
         Register.registerPackets();
     }
 }
