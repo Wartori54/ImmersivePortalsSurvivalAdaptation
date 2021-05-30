@@ -53,6 +53,10 @@ public class PortalClaimer extends Item {
 
                     portals.getFourth().forEach(p -> p.specificPlayerId = user.getUuid());
 
+                    if (!user.isCreative()) {
+                        user.setStackInHand(hand, ItemStack.EMPTY);
+                    }
+
                     return TypedActionResult.success(stack);
                 }
             }

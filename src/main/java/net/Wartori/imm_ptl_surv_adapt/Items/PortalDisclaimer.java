@@ -52,6 +52,10 @@ public class PortalDisclaimer extends Item {
 
                 portals.getFourth().forEach(p -> p.specificPlayerId = null);
 
+                if (!user.isCreative()) {
+                    user.setStackInHand(hand, ItemStack.EMPTY);
+                }
+
                 return TypedActionResult.success(stack);
             }
         }
