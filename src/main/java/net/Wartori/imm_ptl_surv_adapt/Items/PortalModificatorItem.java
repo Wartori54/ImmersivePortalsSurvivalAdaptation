@@ -3,6 +3,7 @@ package net.Wartori.imm_ptl_surv_adapt.Items;
 import com.qouteall.immersive_portals.portal.Portal;
 import com.qouteall.immersive_portals.portal.PortalManipulation;
 import net.Wartori.imm_ptl_surv_adapt.CHelper;
+import net.Wartori.imm_ptl_surv_adapt.Global;
 import net.Wartori.imm_ptl_surv_adapt.Register;
 import net.Wartori.imm_ptl_surv_adapt.Utils;
 import net.fabricmc.api.EnvType;
@@ -161,8 +162,8 @@ public class PortalModificatorItem extends Item {
                     Vec3d viewVector = user.getRotationVector();
                     Direction facing = Direction.getFacing(viewVector.x, viewVector.y, viewVector.z);
                     Vec3d movedist = Vec3d.of(facing.getVector()).multiply(data.distance);
-                    if (portal.getDestPos().distanceTo(portal.getOriginPos().add(movedist)) > 300) {
-                        user.sendMessage(new TranslatableText("info.imm_ptl_surv_adapt.too_far"), true);
+                    if (portal.getDestPos().distanceTo(portal.getOriginPos().add(movedist)) > Global.currConfig.maxPortalModificatorMoveDistance) {
+                        user.sendMessage(new TranslatableText("message.imm_ptl_surv_adapt.too_far"), false);
                         return TypedActionResult.fail(user.getStackInHand(hand));
                     }
                     PortalManipulation.getPortalClutter(world, portal.getDestPos(), portal.transformLocalVecNonScale(portal.getNormal()),  p -> Objects.equals(p.specificPlayerId, portal.specificPlayerId) && portal.getDiscriminator() != (p.getDiscriminator()))

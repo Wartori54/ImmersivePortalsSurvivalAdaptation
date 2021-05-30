@@ -1,6 +1,7 @@
 package net.Wartori.imm_ptl_surv_adapt.Items;
 
 import com.qouteall.immersive_portals.portal.Portal;
+import net.Wartori.imm_ptl_surv_adapt.Global;
 import net.Wartori.imm_ptl_surv_adapt.Utils;
 import net.Wartori.imm_ptl_surv_adapt.miscellaneous.Quartet;
 import net.minecraft.client.item.TooltipContext;
@@ -27,6 +28,10 @@ public class PortalDisclaimer extends Item {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
         if (!world.isClient()) {
+            if (!Global.currConfig.enablePortalClaiming) {
+                user.sendMessage(new TranslatableText("bar.imm_ptl_surv_adapt.portal_claiming_disabled"), true);
+                return TypedActionResult.fail(stack);
+            }
             Portal portal = Utils.getPortalPlayerPointing(user, false);
             if (portal != null && portal.specificPlayerId == user.getUuid()) {
                 Quartet<List<Portal>, List<Portal>, List<Portal>, List<Portal>> allPortals = Utils.getConnectedPortals(portal);

@@ -2,6 +2,7 @@ package net.Wartori.imm_ptl_surv_adapt;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import net.Wartori.imm_ptl_surv_adapt.Config.ModConfig;
 import net.minecraft.item.ItemStack;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -16,6 +17,8 @@ public class Global {
     public static String MOD_ID = "imm_ptl_surv_adapt";
 
     public static Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+    public static ModConfig currConfig = new ModConfig();
 
     public static final Logger LOGGER = LogManager.getLogger("IP Survival Adaptation");
 

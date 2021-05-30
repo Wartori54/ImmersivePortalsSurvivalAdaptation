@@ -187,7 +187,7 @@ public class PortalWrappingZone extends Item {
                         return ActionResult.FAIL;
                     }
                     Global.log(data.startPos.getSquaredDistance(data.endPos));
-                    if (data.startPos.getSquaredDistance(data.endPos) > Math.pow(50, 2)) {
+                    if (data.startPos.getSquaredDistance(data.endPos) > Math.pow(Global.currConfig.maxPortalWrappingBoxSize, 2)) {
                         context.getPlayer().sendMessage(new TranslatableText("message.imm_ptl_surv_adapt.wrapping_zone_too_big"), false);
                         return ActionResult.FAIL;
                     }

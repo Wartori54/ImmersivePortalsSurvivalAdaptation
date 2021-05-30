@@ -3,6 +3,7 @@ package net.Wartori.imm_ptl_surv_adapt.Items;
 import com.qouteall.immersive_portals.portal.Portal;
 import com.qouteall.immersive_portals.portal.PortalManipulation;
 import net.Wartori.imm_ptl_surv_adapt.CHelper;
+import net.Wartori.imm_ptl_surv_adapt.Global;
 import net.Wartori.imm_ptl_surv_adapt.Register;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -132,8 +133,8 @@ public class PortalCreatorOneWay extends Item {
             return ActionResult.SUCCESS;
         } else {
             if (data.destination_set) {
-                if (data.destination.distanceTo(Vec3d.ofCenter(context.getBlockPos())) > 100) {
-                    user.sendMessage(new TranslatableText("message.imm_ptl_surv_adapt.place_too_far"), false);
+                if (data.destination.distanceTo(Vec3d.ofCenter(context.getBlockPos())) > Global.currConfig.maxPortalCreatorDistance) {
+                    user.sendMessage(new TranslatableText("message.imm_ptl_surv_adapt.place_too_far", Global.currConfig.maxPortalCreatorDistance), false);
                     return ActionResult.FAIL;
 
                 }

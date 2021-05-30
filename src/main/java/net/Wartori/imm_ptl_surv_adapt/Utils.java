@@ -8,6 +8,7 @@ import net.Wartori.imm_ptl_surv_adapt.miscellaneous.Quartet;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -71,4 +72,5 @@ public class Utils {
         List<Portal> portals4 = PortalManipulation.getPortalClutter(portal.world, portal.getDestPos(), portal.transformLocalVecNonScale(portal.getNormal().multiply(-1)), p -> true);
         return Quartet.of(portals1, portals2, portals3, portals4);
     }
+
 }
