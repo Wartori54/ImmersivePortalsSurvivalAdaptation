@@ -1,0 +1,12 @@
+{
+  "type": "nbtcrafting:brewing",
+  "base": {
+    "potion": "imm_ptl_surv_adapt:portal_bypass"
+  },
+  "ingredient": {
+    "item": "minecraft:redstone"
+  },
+  "result": {
+    "potion": "imm_ptl_surv_adapt:portal_bypass_long"
+  }
+}

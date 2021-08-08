@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "IPI",
+    "IMI",
+    "IPI"
+  ],
+  "key": {
+    "M": {
+      "item": "imm_ptl_surv_adapt:portal_modificator"
+    },
+    "P": {
+      "item": "imm_ptl_surv_adapt:portal_ingot"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "imm_ptl_surv_adapt:portal_claimer",
+    "count": 1
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "imm_ptl_surv_adapt:used_portal_block"
+  },
+  "result": {
+    "item": "imm_ptl_surv_adapt:portal_ingot"
+  },
+  "experience": 1,
+  "cookingtime": 100
+}
