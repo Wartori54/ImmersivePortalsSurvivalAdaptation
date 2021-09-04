@@ -17,6 +17,8 @@ public class ModConfig {
 
     public int maxPortalModificatorMoveDistance = 300;
     public int maxPortalCreatorDistance = 100;
+    public int maxPortalCreatorWidth = 10;
+    public int maxPortalCreatorHeight = 10;
     public int maxPortalWrappingBoxSize = 50;
     public boolean enablePortalClaiming = true;
 

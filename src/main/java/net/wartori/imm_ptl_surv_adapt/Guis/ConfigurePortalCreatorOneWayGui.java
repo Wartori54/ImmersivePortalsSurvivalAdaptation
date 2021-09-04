@@ -28,7 +28,7 @@ public class ConfigurePortalCreatorOneWayGui extends LightweightGuiDescription {
         WNumberField widthEntry = new WNumberField();
         widthEntry.setText(String.valueOf(tag.getInt("width")));
         widthEntry.setOnNumberTyped(((num, value) -> {
-            if (value > 10) {
+            if (value > Global.currConfig.maxPortalCreatorWidth) {
                 return false;
             } else {
                 if (value == 0) {
@@ -43,7 +43,7 @@ public class ConfigurePortalCreatorOneWayGui extends LightweightGuiDescription {
         WNumberField heightEntry = new WNumberField();
         heightEntry.setText(String.valueOf(tag.getInt("height")));
         heightEntry.setOnNumberTyped(((num, value) -> {
-            if (value > 10) {
+            if (value > Global.currConfig.maxPortalCreatorHeight) {
                 return false;
             } else {
                 if (value == 0) {

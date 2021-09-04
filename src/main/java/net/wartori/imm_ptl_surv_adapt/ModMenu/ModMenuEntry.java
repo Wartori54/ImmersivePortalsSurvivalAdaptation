@@ -36,6 +36,20 @@ public class ModMenuEntry implements ModMenuApi {
                     300
             ).setDefaultValue(100).setTooltip(new TranslatableText("config.imm_ptl_surv_adapt.intSliderRemember")).build();
 
+            IntegerSliderEntry maxPortalCreatorWidth = builder.entryBuilder().startIntSlider(
+                    new TranslatableText("config.imm_ptl_surv_adapt.maxPortalCreatorWidth"),
+                    Global.currConfig.maxPortalCreatorWidth,
+                    1,
+                    50
+            ).setDefaultValue(10).setTooltip(new TranslatableText("config.imm_ptl_surv_adapt.intSliderRemember")).build();
+
+            IntegerSliderEntry maxPortalCreatorHeight = builder.entryBuilder().startIntSlider(
+                    new TranslatableText("config.imm_ptl_surv_adapt.maxPortalCreatorHeight"),
+                    Global.currConfig.maxPortalCreatorHeight,
+                    1,
+                    50
+            ).setDefaultValue(10).setTooltip(new TranslatableText("config.imm_ptl_surv_adapt.intSliderRemember")).build();
+
             IntegerSliderEntry maxPortalWrappingBoxSize = builder.entryBuilder().startIntSlider(
                     new TranslatableText("config.imm_ptl_surv_adapt.maxDistancePortalWrappingBoxSize"),
                     Global.currConfig.maxPortalWrappingBoxSize,
@@ -50,6 +64,8 @@ public class ModMenuEntry implements ModMenuApi {
 
             mainCategory.addEntry(maxPortalModificatorMoveDistance);
             mainCategory.addEntry(maxPortalCreatorDistance);
+            mainCategory.addEntry(maxPortalCreatorWidth);
+            mainCategory.addEntry(maxPortalCreatorHeight);
             mainCategory.addEntry(maxPortalWrappingBoxSize);
             mainCategory.addEntry(enablePortalClaimer);
 
@@ -59,6 +75,8 @@ public class ModMenuEntry implements ModMenuApi {
                         ModConfig newConfig = new ModConfig();
                         newConfig.maxPortalModificatorMoveDistance = maxPortalModificatorMoveDistance.getValue();
                         newConfig.maxPortalCreatorDistance = maxPortalCreatorDistance.getValue();
+                        newConfig.maxPortalCreatorWidth = maxPortalCreatorWidth.getValue();
+                        newConfig.maxPortalCreatorHeight = maxPortalCreatorHeight.getValue();
                         newConfig.maxPortalWrappingBoxSize = maxPortalWrappingBoxSize.getValue();
                         newConfig.enablePortalClaiming = enablePortalClaimer.getValue();
                         newConfig.saveConfig();

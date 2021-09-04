@@ -165,6 +165,8 @@ public class PortalCreatorOneWay extends Item {
                     return ActionResult.FAIL;
 
                 }
+                data.width = data.width > Global.currConfig.maxPortalCreatorWidth ? Global.currConfig.maxPortalCreatorWidth : data.width;
+                data.height = data.height > Global.currConfig.maxPortalCreatorHeight ? Global.currConfig.maxPortalCreatorHeight : data.height;
 
                 Portal portal = PortalManipulation.placePortal(data.width, data.height, user);
                 if (portal == null) {
