@@ -74,5 +74,6 @@
   "config.imm_ptl_surv_adapt.maxDistancePortalModificatorMove": "Max distance a portal can be moved",
   "config.imm_ptl_surv_adapt.maxDistancePortalCreator": "Max distance of the portal creator",
   "config.imm_ptl_surv_adapt.maxDistancePortalWrappingBoxSize": "Max size of portal wrapping zone",
-  "config.imm_ptl_surv_adapt.enablePortalClaiming": "Enable portal claiming"
+  "config.imm_ptl_surv_adapt.enablePortalClaiming": "Enable portal claiming",
+  "config.imm_ptl_surv_adapt.intSliderRemember": "Remember that you can always set any value in the config file"
 }

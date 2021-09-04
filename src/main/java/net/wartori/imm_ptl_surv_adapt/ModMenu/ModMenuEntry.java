@@ -27,21 +27,21 @@ public class ModMenuEntry implements ModMenuApi {
                     Global.currConfig.maxPortalModificatorMoveDistance,
                     100,
                     1200
-            ).setDefaultValue(300).build();
+            ).setDefaultValue(300).setTooltip(new TranslatableText("config.imm_ptl_surv_adapt.intSliderRemember")).build();
 
             IntegerSliderEntry maxPortalCreatorDistance = builder.entryBuilder().startIntSlider(
                     new TranslatableText("config.imm_ptl_surv_adapt.maxDistancePortalCreator"),
                     Global.currConfig.maxPortalCreatorDistance,
                     50,
                     300
-            ).setDefaultValue(100).build();
+            ).setDefaultValue(100).setTooltip(new TranslatableText("config.imm_ptl_surv_adapt.intSliderRemember")).build();
 
             IntegerSliderEntry maxPortalWrappingBoxSize = builder.entryBuilder().startIntSlider(
                     new TranslatableText("config.imm_ptl_surv_adapt.maxDistancePortalWrappingBoxSize"),
                     Global.currConfig.maxPortalWrappingBoxSize,
                     5,
                     75
-            ).setDefaultValue(50).build();
+            ).setDefaultValue(50).setTooltip(new TranslatableText("config.imm_ptl_surv_adapt.intSliderRemember")).build();
 
             BooleanListEntry enablePortalClaimer = builder.entryBuilder().startBooleanToggle(
                     new TranslatableText("config.imm_ptl_surv_adapt.enablePortalClaiming"),

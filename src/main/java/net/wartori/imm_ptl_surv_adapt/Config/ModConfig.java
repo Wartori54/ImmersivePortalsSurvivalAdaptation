@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ModConfig {
@@ -26,16 +27,15 @@ public class ModConfig {
             try {
                 String config = Files.lines(configFile.toPath()).collect(Collectors.joining());
                 ModConfig result = Global.gson.fromJson(config, ModConfig.class);
-                if (result == null) {
-                    return new ModConfig();
-                }
-                return result;
+                return Objects.requireNonNullElseGet(result, ModConfig::new);
             } catch (IOException ex) {
                 ex.printStackTrace();
                 return new ModConfig();
             }
         } else {
-            return new ModConfig();
+            ModConfig newConfig = new ModConfig();
+            newConfig.saveConfig();
+            return newConfig;
         }
     }
 
@@ -53,10 +53,6 @@ public class ModConfig {
     }
 
     public static File getGameDir() {
-        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
-            return MinecraftClient.getInstance().runDirectory;
-        } else {
-            return MiscHelper.getServer().getRunDirectory();
-        }
+        return new File(String.valueOf(FabricLoader.getInstance().getGameDir()));
     }
 }
