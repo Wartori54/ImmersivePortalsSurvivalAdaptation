@@ -4,10 +4,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.collection.DefaultedList;
+import net.wartori.imm_ptl_surv_adapt.Register;
 import net.wartori.imm_ptl_surv_adapt.RegisterItemGroups;
 
-public class PortalModificatorDelete extends Item {
-    public PortalModificatorDelete(Settings settings) {
+public class PortalIngotRaw extends Item {
+    public PortalIngotRaw(Settings settings) {
         super(settings);
     }
 

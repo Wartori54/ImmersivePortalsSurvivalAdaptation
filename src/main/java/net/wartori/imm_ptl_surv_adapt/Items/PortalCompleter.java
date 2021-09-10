@@ -8,6 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.wartori.imm_ptl_surv_adapt.RegisterItemGroups;
 import net.wartori.imm_ptl_surv_adapt.Utils;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
@@ -114,7 +115,7 @@ public class PortalCompleter extends Item {
 
     @Override
     public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
-        if (this.isIn(group)) {
+        if (this.isIn(group) || RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP == group) {
             for (boolean i :
                     new boolean[]{false, true}) {
                 ItemStack itemStack = new ItemStack(Register.PORTAL_COMPLETER_ITEM);

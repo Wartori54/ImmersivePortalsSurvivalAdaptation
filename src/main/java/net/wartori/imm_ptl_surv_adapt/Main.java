@@ -9,7 +9,6 @@ public class Main implements ModInitializer {
 	public void onInitialize() {
 		Register.registerItems();
 		Register.registerBlocks();
-		Register.registerWorldGen();
 		Register.registerArgumentTypes();
 		Register.registerCommands();
 		Register.registerEntity();

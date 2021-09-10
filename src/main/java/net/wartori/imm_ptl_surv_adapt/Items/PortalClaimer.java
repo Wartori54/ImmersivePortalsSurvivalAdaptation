@@ -1,6 +1,9 @@
 package net.wartori.imm_ptl_surv_adapt.Items;
 
+import net.minecraft.item.ItemGroup;
+import net.minecraft.util.collection.DefaultedList;
 import net.wartori.imm_ptl_surv_adapt.Global;
+import net.wartori.imm_ptl_surv_adapt.RegisterItemGroups;
 import net.wartori.imm_ptl_surv_adapt.Utils;
 import net.wartori.imm_ptl_surv_adapt.miscellaneous.Quartet;
 import net.minecraft.client.item.TooltipContext;
@@ -68,5 +71,12 @@ public class PortalClaimer extends Item {
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         tooltip.add(new TranslatableText("tooltip.imm_ptl_surv_adapt.portal_claimer_desc"));
         super.appendTooltip(stack, world, tooltip, context);
+    }
+
+    @Override
+    public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
+        if (this.isIn(group) || RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP == group) {
+            stacks.add(new ItemStack(this));
+        }
     }
 }

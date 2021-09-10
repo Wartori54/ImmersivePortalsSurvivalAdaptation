@@ -7,7 +7,7 @@ import net.minecraft.block.Material;
 import net.minecraft.sound.BlockSoundGroup;
 
 public class PortalBlock extends Block {
-
+    // TODO: 9/9/21 Make this portal brick, and create a new portal block, made of 9 portal ingots, like vanilla iron
     public PortalBlock() {
         super(FabricBlockSettings.of(Material.METAL).requiresTool().breakByTool(FabricToolTags.PICKAXES).sounds(BlockSoundGroup.STONE).strength(5, 6));
     }

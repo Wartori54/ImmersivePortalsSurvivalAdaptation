@@ -1,9 +1,6 @@
 package net.wartori.imm_ptl_surv_adapt.Items;
 
-import net.wartori.imm_ptl_surv_adapt.CHelper;
-import net.wartori.imm_ptl_surv_adapt.Global;
-import net.wartori.imm_ptl_surv_adapt.Register;
-import net.wartori.imm_ptl_surv_adapt.Utils;
+import net.wartori.imm_ptl_surv_adapt.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
@@ -114,7 +111,7 @@ public class PortalModificatorItem extends Item {
 
     @Override
     public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
-        if (this.isIn(group)) {
+        if (this.isIn(group) || RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP == group) {
             ItemStack nothingStack = new ItemStack(Register.PORTAL_MODIFICATOR_ITEM);
             Data nothingStackData = new Data(0, 0, 0, "0000");
             nothingStack.setNbt(nothingStackData.serialize());

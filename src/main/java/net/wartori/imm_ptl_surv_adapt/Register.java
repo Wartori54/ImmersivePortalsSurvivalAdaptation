@@ -1,5 +1,9 @@
 package net.wartori.imm_ptl_surv_adapt;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.collection.DefaultedList;
 import net.wartori.imm_ptl_surv_adapt.Blocks.*;
 import net.wartori.imm_ptl_surv_adapt.Commands.ArgumentTypes.DirectionArgumentType;
 import net.wartori.imm_ptl_surv_adapt.Commands.CreatePortalWithRelativeDestination;
@@ -52,19 +56,22 @@ import java.util.function.Consumer;
 
 public class Register {
 
-    public static final Item PORTAL_MODIFICATOR_ITEM = new PortalModificatorItem(new Item.Settings().maxCount(1).maxDamage(100).group(RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP));
-    public static final Item PORTAL_MODIFICATOR_DISTANCE_MODIFIER_ITEM = new PortalModificatorDistanceModifier(new Item.Settings().maxCount(1).group(RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP));
-    public static final Item PORTAL_MODIFICATOR_ROTATION_MODIFIER_ITEM = new PortalModificatorRotationModifier(new Item.Settings().maxCount(1).group(RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP));
-    public static final Item PORTAL_CREATOR_ONE_WAY = new PortalCreatorOneWay(new Item.Settings().maxCount(1).group(RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP));
-    public static final Item PORTAL_INGOT = new PortalIngot(new Item.Settings().group(RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP));
-    public static final Item PORTAL_MODIFICATOR_DELETE_ITEM = new PortalModificatorDelete(new Item.Settings().group(RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP).maxCount(1));
-    public static final Item PORTAL_COMPLETER_ITEM = new PortalCompleter(new Item.Settings().maxCount(1).maxDamage(12).group(RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP));
-    public static final Item PORTAL_WRAPPING_ZONE =  new PortalWrappingZone(new Item.Settings().maxCount(1).group(RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP));
-    public static final Item PORTAL_CLAIMER_ITEM = new PortalClaimer(new Item.Settings().maxCount(1).group(RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP));
-    public static final Item PORTAL_DISCLAIMER_ITEM = new PortalDisclaimer(new Item.Settings().maxCount(1).group(RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP));
+    public static final Item PORTAL_MODIFICATOR_ITEM = new PortalModificatorItem(new Item.Settings().maxCount(1).maxDamage(100).group(ItemGroup.TOOLS));
+    public static final Item PORTAL_MODIFICATOR_DISTANCE_MODIFIER_ITEM = new PortalModificatorDistanceModifier(new Item.Settings().maxCount(1).group(ItemGroup.TOOLS));
+    public static final Item PORTAL_MODIFICATOR_ROTATION_MODIFIER_ITEM = new PortalModificatorRotationModifier(new Item.Settings().maxCount(1).group(ItemGroup.TOOLS));
+    public static final Item PORTAL_CREATOR_ONE_WAY = new PortalCreatorOneWay(new Item.Settings().maxCount(1).group(ItemGroup.TOOLS));
+    public static final Item PORTAL_INGOT = new PortalIngot(new Item.Settings().group(ItemGroup.MATERIALS));
+    public static final Item PORTAL_INGOT_RAW = new PortalIngotRaw(new Item.Settings().group(ItemGroup.MATERIALS));
+    public static final Item PORTAL_MODIFICATOR_DELETE_ITEM = new PortalModificatorDelete(new Item.Settings().group(ItemGroup.TOOLS).maxCount(1));
+    public static final Item PORTAL_COMPLETER_ITEM = new PortalCompleter(new Item.Settings().maxCount(1).maxDamage(12).group(ItemGroup.TOOLS));
+    public static final Item PORTAL_WRAPPING_ZONE =  new PortalWrappingZone(new Item.Settings().maxCount(1).group(ItemGroup.TOOLS));
+    public static final Item PORTAL_CLAIMER_ITEM = new PortalClaimer(new Item.Settings().maxCount(1).group(ItemGroup.TOOLS));
+    public static final Item PORTAL_DISCLAIMER_ITEM = new PortalDisclaimer(new Item.Settings().maxCount(1).group(ItemGroup.TOOLS));
 
     public static final Block PORTAL_BLOCK = new PortalBlock();
     public static final Block PORTAL_ORE = new PortalOre();
+    public static final Block PORTAL_ORE_DEEPSLATE = new PortalOreDeepslate();
+    public static final Block PORTAL_BLOCK_RAW = new PortalBlockRaw();
     public static final Block USED_PORTAL_BLOCK = new UsedPortalBlock();
     public static final Block WRAPPING_ZONE_START = new WrappingZoneStart();
     public static final Block WRAPPING_ZONE_END = new WrappingZoneEnd();
@@ -88,30 +95,83 @@ public class Register {
             new ArrayList<>()
     );
 
-    private static final ConfiguredFeature<?, ?> PORTAL_ORE_OVERWORLD = Feature.ORE
-            .configure(new OreFeatureConfig(
-                    OreFeatureConfig.Rules.BASE_STONE_OVERWORLD,
-                    PORTAL_ORE.getDefaultState(),
-                    32)) // vein size
-            .range(new RangeDecoratorConfig(
-                    UniformHeightProvider.create(YOffset.aboveBottom(0), YOffset.fixed(64))))
-            .spreadHorizontally()
-            .applyChance(3);
+    // These three must be done in static, not in registerWorldGen
+    public static final ImmutableList<OreFeatureConfig.Target> PORTAL_ORE_TARGETS =
+            ImmutableList.of(OreFeatureConfig.createTarget(OreFeatureConfig.Rules.STONE_ORE_REPLACEABLES, PORTAL_ORE.getDefaultState()),
+                    OreFeatureConfig.createTarget(OreFeatureConfig.Rules.DEEPSLATE_ORE_REPLACEABLES, PORTAL_ORE_DEEPSLATE.getDefaultState()));
+
+    public static final OreFeatureConfig PORTAL_ORE_CONFIG = new OreFeatureConfig(PORTAL_ORE_TARGETS, 32);
+
+    public static final ConfiguredFeature<?, ?> PORTAL_ORE_OVERWORLD = Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, Utils.myId("portal_ore_overworld"),
+            ((Feature.ORE.configure(PORTAL_ORE_CONFIG).triangleRange(YOffset.aboveBottom(0), YOffset.fixed(64))).spreadHorizontally()).applyChance(3));
+
     public static final StatusEffect PORTAL_BY_PASS = new PortalByPass();
 
     protected static void registerItems() {
-        Registry.register(Registry.ITEM, Utils.myId("portal_block"), new BlockItem(PORTAL_BLOCK, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)));
+        Registry.register(Registry.ITEM, Utils.myId("portal_block"), new BlockItem(PORTAL_BLOCK, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)) {
+            @Override
+            public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
+                if (this.isIn(group)  || RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP == group) {
+                    stacks.add(new ItemStack(this));
+                }
+            }
+        });
+        Registry.register(Registry.ITEM, Utils.myId("portal_block_raw"), new BlockItem(PORTAL_BLOCK_RAW, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)) {
+            @Override
+            public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
+                if (this.isIn(group)  || RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP == group) {
+                    stacks.add(new ItemStack(this));
+                }
+            }
+        });
         Registry.register(Registry.ITEM, Utils.myId("portal_modificator"), PORTAL_MODIFICATOR_ITEM);
         Registry.register(Registry.ITEM, Utils.myId("portal_modificator_distance_modifier"), PORTAL_MODIFICATOR_DISTANCE_MODIFIER_ITEM);
         Registry.register(Registry.ITEM, Utils.myId("portal_modificator_rotation_modifier"), PORTAL_MODIFICATOR_ROTATION_MODIFIER_ITEM);
         Registry.register(Registry.ITEM, Utils.myId("portal_creator_one_way"), PORTAL_CREATOR_ONE_WAY);
-        Registry.register(Registry.ITEM, Utils.myId("portal_ore"), new BlockItem(PORTAL_ORE, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)));
+        Registry.register(Registry.ITEM, Utils.myId("portal_ore"), new BlockItem(PORTAL_ORE, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)) {
+            @Override
+            public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
+                if (this.isIn(group) || RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP == group) {
+                    stacks.add(new ItemStack(this));
+                }
+            }
+        });
+        Registry.register(Registry.ITEM, Utils.myId("portal_ore_deepslate"), new BlockItem(PORTAL_ORE_DEEPSLATE, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)) {
+            @Override
+            public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
+                if (this.isIn(group) || RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP == group) {
+                    stacks.add(new ItemStack(this));
+                }
+            }
+        });
         Registry.register(Registry.ITEM, Utils.myId("portal_ingot"), PORTAL_INGOT);
-        Registry.register(Registry.ITEM, Utils.myId("used_portal_block"), new BlockItem(USED_PORTAL_BLOCK, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)));
+        Registry.register(Registry.ITEM, Utils.myId("portal_ingot_raw"), PORTAL_INGOT_RAW);
+        Registry.register(Registry.ITEM, Utils.myId("used_portal_block"), new BlockItem(USED_PORTAL_BLOCK, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)) {
+            @Override
+            public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
+                if (this.isIn(group) || RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP == group) {
+                    stacks.add(new ItemStack(this));
+                }
+            }
+        });
         Registry.register(Registry.ITEM, Utils.myId("portal_modificator_delete"), PORTAL_MODIFICATOR_DELETE_ITEM);
         Registry.register(Registry.ITEM, Utils.myId("portal_completer"), PORTAL_COMPLETER_ITEM);
-        Registry.register(Registry.ITEM, Utils.myId("wrapping_zone_start"), new BlockItem(WRAPPING_ZONE_START, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)));
-        Registry.register(Registry.ITEM, Utils.myId("wrapping_zone_end"), new BlockItem(WRAPPING_ZONE_END, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)));
+        Registry.register(Registry.ITEM, Utils.myId("wrapping_zone_start"), new BlockItem(WRAPPING_ZONE_START, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)) {
+            @Override
+            public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
+                if (this.isIn(group) || RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP == group) {
+                    stacks.add(new ItemStack(this));
+                }
+            }
+        });
+        Registry.register(Registry.ITEM, Utils.myId("wrapping_zone_end"), new BlockItem(WRAPPING_ZONE_END, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)) {
+            @Override
+            public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
+                if (this.isIn(group)  || RegisterItemGroups.IMMERSIVE_PORTALS_SURVIVAL_ADAPTATION_GROUP == group) {
+                    stacks.add(new ItemStack(this));
+                }
+            }
+        });
         Registry.register(Registry.ITEM, Utils.myId("portal_wrapping_zone"), PORTAL_WRAPPING_ZONE);
         Registry.register(Registry.ITEM, Utils.myId("portal_claimer"), PORTAL_CLAIMER_ITEM);
         Registry.register(Registry.ITEM, Utils.myId("portal_disclaimer"), PORTAL_DISCLAIMER_ITEM);
@@ -120,16 +180,11 @@ public class Register {
     protected static void registerBlocks() {
         Registry.register(Registry.BLOCK, Utils.myId("portal_block"), PORTAL_BLOCK);
         Registry.register(Registry.BLOCK, Utils.myId("portal_ore"), PORTAL_ORE);
+        Registry.register(Registry.BLOCK, Utils.myId("portal_ore_deepslate"), PORTAL_ORE_DEEPSLATE);
+        Registry.register(Registry.BLOCK, Utils.myId("portal_block_raw"), PORTAL_BLOCK_RAW);
         Registry.register(Registry.BLOCK, Utils.myId("used_portal_block"), USED_PORTAL_BLOCK);
         Registry.register(Registry.BLOCK, Utils.myId("wrapping_zone_start"), WRAPPING_ZONE_START);
         Registry.register(Registry.BLOCK, Utils.myId("wrapping_zone_end"), WRAPPING_ZONE_END);
-    }
-
-    protected static void registerWorldGen() {
-        RegistryKey<ConfiguredFeature<?, ?>> orePortalOverworld = RegistryKey.of(Registry.CONFIGURED_FEATURE_KEY,
-                Utils.myId("ore_portal_overworld"));
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, orePortalOverworld.getValue(), PORTAL_ORE_OVERWORLD);
-        BiomeModifications.addFeature(BiomeSelectors.foundInOverworld(), GenerationStep.Feature.UNDERGROUND_ORES, orePortalOverworld);
     }
 
     protected static void registerCommands() {
@@ -156,7 +211,7 @@ public class Register {
     }
 
 
-
+    @SuppressWarnings("deprecation")
     protected static void registerStructures() {
         Registry.register(Registry.STRUCTURE_PIECE, Utils.myId("non_eucledian_house_piece"), NON_EUCLIDEAN_HOUSE_PIECE);
         FabricStructureBuilder.create(Utils.myId("non_eucledian_house_structure"), NON_EUCLIDEAN_HOUSE_STRUCTURE)

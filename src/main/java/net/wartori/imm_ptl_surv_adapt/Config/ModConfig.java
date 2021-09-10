@@ -1,10 +1,7 @@
 package net.wartori.imm_ptl_surv_adapt.Config;
 
 import net.wartori.imm_ptl_surv_adapt.Global;
-import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.MinecraftClient;
-import qouteall.q_misc_util.MiscHelper;
 
 import java.io.File;
 import java.io.FileWriter;
