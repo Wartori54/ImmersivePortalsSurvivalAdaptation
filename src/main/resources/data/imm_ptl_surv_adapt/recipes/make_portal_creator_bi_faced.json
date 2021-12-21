@@ -1,0 +1,27 @@
+{
+  "type": "nbtcrafting:smithing",
+  "base": {
+    "item": "imm_ptl_surv_adapt:portal_creator_one_way",
+    "data": {
+      "require": {
+        "BiFaced": false
+      }
+    }
+  },
+  "ingredient": {
+    "item": "minecraft:obsidian"
+  },
+  "result": {
+    "item": "imm_ptl_surv_adapt:portal_creator_one_way",
+    "data": {
+      "Side": "$ base.Side",
+      "BiFaced": true,
+      "DestinationSet": "$ base.DestinationSet",
+      "DestinationX": "$ base.DestinationX",
+      "DestinationY": "$ base.DestinationY",
+      "DestinationZ": "$ base.DestinationZ",
+      "width": "$ base.width",
+      "height": "$ base.height"
+    }
+  }
+}

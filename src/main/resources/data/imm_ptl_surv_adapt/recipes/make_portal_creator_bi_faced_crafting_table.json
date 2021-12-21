@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients":[
+    {
+    "item": "minecraft:obsidian"
+  },
+    {
+      "item": "imm_ptl_surv_adapt:portal_creator_one_way",
+      "data": {
+        "require": {
+          "BiFaced": false
+        }
+      }
+    }
+  ],
+  "result": {
+    "item": "imm_ptl_surv_adapt:portal_creator_one_way",
+    "count": 1,
+    "data": {
+      "Side": "$ i1.Side",
+      "BiFaced": true,
+      "DestinationSet": "$ i1.DestinationSet",
+      "DestinationX": "$ i1.DestinationX",
+      "DestinationY": "$ i1.DestinationY",
+      "DestinationZ": "$ i1.DestinationZ",
+      "width": "$ i1.width",
+      "height": "$ i1.height"
+    }
+  }
+}

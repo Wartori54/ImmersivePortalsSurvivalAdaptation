@@ -1,0 +1,22 @@
+{
+  "type": "nbtcrafting:smithing",
+  "base": {
+    "item": "imm_ptl_surv_adapt:portal_modificator",
+    "data": {
+      "require": {
+        "Action": "$..1"
+      }
+    }
+  },
+  "ingredient": {
+    "item": "imm_ptl_surv_adapt:portal_modificator_distance_modifier"
+  },
+  "result": {
+    "item": "imm_ptl_surv_adapt:portal_modificator",
+    "data": {
+      "Action": 1,
+      "Distance": "$ base.Distance+ingredient.Distance",
+      "Degrees": 0.0
+    }
+  }
+}

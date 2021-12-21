@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "imm_ptl_surv_adapt:item/portal_claimer"
+  }
+}

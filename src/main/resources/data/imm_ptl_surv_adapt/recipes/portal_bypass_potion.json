@@ -1,0 +1,12 @@
+{
+  "type": "nbtcrafting:brewing",
+  "base": {
+    "potion": "minecraft:awkward"
+  },
+  "ingredient": {
+    "item": "imm_ptl_surv_adapt:portal_block"
+  },
+  "result": {
+    "potion": "imm_ptl_surv_adapt:portal_bypass"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "imm_ptl_surv_adapt:portal_claimer"
+  },
+  "addition": {
+    "item": "minecraft:nether_wart"
+  },
+  "result": {
+    "item": "imm_ptl_surv_adapt:portal_disclaimer"
+  }
+}

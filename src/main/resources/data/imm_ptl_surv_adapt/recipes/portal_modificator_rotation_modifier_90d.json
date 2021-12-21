@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "rotation_modifier",
+  "pattern": [
+    " R ",
+    "RCR",
+    " R "
+  ],
+  "key": {
+    "R": {
+      "item": "imm_ptl_surv_adapt:portal_block"
+    },
+    "C": {
+      "item": "minecraft:compass"
+    }
+  },
+  "result": {
+    "item": "imm_ptl_surv_adapt:portal_modificator_rotation_modifier",
+    "count": 1,
+    "data": {
+      "Degrees": 90
+    }
+  }
+}

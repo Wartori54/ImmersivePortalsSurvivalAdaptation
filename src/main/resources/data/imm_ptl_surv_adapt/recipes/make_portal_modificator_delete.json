@@ -1,0 +1,23 @@
+{
+  "type": "nbtcrafting:smithing",
+  "base": {
+    "item": "imm_ptl_surv_adapt:portal_modificator",
+    "data": {
+      "require": {
+        "Action": 0
+      }
+    }
+  },
+  "ingredient": {
+    "item": "imm_ptl_surv_adapt:portal_modificator_delete"
+  },
+  "result": {
+    "item": "imm_ptl_surv_adapt:portal_modificator",
+    "data": {
+      "Action": 3,
+      "Distance": 0.0,
+      "Degrees": "$ base.Degrees+ingredient.Degrees",
+      "facesToDelete": "1111"
+    }
+  }
+}

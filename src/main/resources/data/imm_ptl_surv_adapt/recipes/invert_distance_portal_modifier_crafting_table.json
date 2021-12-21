@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients":[
+    {
+      "item": "minecraft:nether_wart"
+    },{
+      "item": "imm_ptl_surv_adapt:portal_modificator_distance_modifier"
+    }
+  ],
+  "result": {
+    "item": "imm_ptl_surv_adapt:portal_modificator_distance_modifier",
+    "count": 1,
+    "data": {
+      "Distance": "$ i1.Distance * (0-1)#f"
+    }
+  }
+}

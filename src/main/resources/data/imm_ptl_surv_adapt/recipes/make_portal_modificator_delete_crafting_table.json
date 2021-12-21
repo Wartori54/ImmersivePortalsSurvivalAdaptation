@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients":[
+    {
+    "item": "imm_ptl_surv_adapt:portal_modificator_delete"
+  },
+    {
+      "item": "imm_ptl_surv_adapt:portal_modificator",
+      "data": {
+        "require": {
+          "Action": 0
+        }
+      }
+    }
+  ],
+  "result": {
+    "item": "imm_ptl_surv_adapt:portal_modificator",
+    "count": 1,
+    "data": {
+      "Action": 3,
+      "Distance": 0.0,
+      "Degrees": "$ i1.Degrees+i0.Degrees",
+      "facesToDelete": "1111"
+    }
+  }
+}

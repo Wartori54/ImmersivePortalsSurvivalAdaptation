@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "imm_ptl_surv_adapt:block/portal_block" }
+  }
+}

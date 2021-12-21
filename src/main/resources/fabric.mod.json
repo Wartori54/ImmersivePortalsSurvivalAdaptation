@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "imm_ptl_surv_adapt",
+  "version": "${version}",
+  "name": "Immersive Portals Mod Survival Adaptation",
+  "description": "A mod that allows easy use of the Immersive Portals Mod in survival.",
+  "authors": [
+    "Wartori"
+  ],
+  "contact": {
+    "website": "https://www.curseforge.com/minecraft/mc-mods/immersive-portals-survival-adaptation",
+    "sources": "https://github.com/Wartori54/ImmersivePortalsSurvivalAdaptation"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/imm_ptl_surv_adapt/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.wartori.imm_ptl_surv_adapt.Main"
+    ],
+    "server": [
+      "net.wartori.imm_ptl_surv_adapt.MainServer"
+    ],
+    "client": [
+      "net.wartori.imm_ptl_surv_adapt.MainClient"
+    ],
+    "modmenu": [
+      "net.wartori.imm_ptl_surv_adapt.ModMenu.ModMenuEntry"
+    ]
+  },
+  "mixins": [
+    "imm_ptl_surv_adapt.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.11.3",
+    "fabric": "*",
+    "minecraft": "1.18.x"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}

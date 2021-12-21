@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CIC",
+    "CIC",
+    "CBC"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:green_concrete"
+    },
+    "I": {
+      "item": "imm_ptl_surv_adapt:portal_ingot"
+    },
+    "B": {
+      "item": "imm_ptl_surv_adapt:portal_block"
+    }
+  },
+  "result": {
+    "item": "imm_ptl_surv_adapt:wrapping_zone_end",
+    "count": 3
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.wartori.imm_ptl_surv_adapt.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "mixins": [
+    "BlockManipulationClientMixin",
+    "DefaultBiomeFeaturesMixin",
+    "MixinFlintAndSteel",
+    "MyGameRendererMixin",
+    "OrePlacedFeaturesAccessor",
+    "PortalMixin",
+    "PortalRendererMixin"
+  ],
+  "client": [
+    "MixinGameRenderer"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

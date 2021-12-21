@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "imm_ptl_surv_adapt:portal_ingot_raw"
+  },
+  "result": {
+    "item": "imm_ptl_surv_adapt:portal_ingot"
+  },
+  "experience": 1,
+  "cookingtime": 200
+}

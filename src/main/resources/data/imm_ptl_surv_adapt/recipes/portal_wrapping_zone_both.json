@@ -1,0 +1,29 @@
+{
+  "type": "nbtcrafting:smithing",
+  "base": {
+    "item": "imm_ptl_surv_adapt:portal_wrapping_zone",
+    "data": {
+      "require": {
+        "warpingType": 0
+      }
+    }
+  },
+  "ingredient": {
+    "item": "imm_ptl_surv_adapt:portal_wrapping_zone",
+    "data": {
+      "require": {
+        "warpingType": 1
+      }
+    }
+  },
+  "result": {
+    "item": "imm_ptl_surv_adapt:portal_wrapping_zone",
+    "data": {
+      "isValidEnd": false,
+      "isValidStart": false,
+      "warpingType": 2,
+      "startPos": [0, 0, 0],
+      "endPos": [0, 0, 0]
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EOE",
+    "ODO",
+    "EOE"
+  ],
+  "key": {
+    "O": {
+      "item": "minecraft:obsidian"
+    },
+    "E": {
+      "item": "imm_ptl_surv_adapt:portal_ingot"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "imm_ptl_surv_adapt:portal_modificator",
+    "data": {
+      "Action": 0,
+      "Distance": 0.0,
+      "Degrees": 0.0
+    },
+    "count": 1
+  }
+}

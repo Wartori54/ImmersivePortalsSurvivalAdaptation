@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "OOO",
+    "III",
+    "III"
+  ],
+  "key": {
+    "O": {
+      "item": "minecraft:obsidian"
+    },
+    "I": {
+      "item": "imm_ptl_surv_adapt:portal_ingot"
+    }
+  },
+  "result": {
+    "item": "imm_ptl_surv_adapt:portal_creator_one_way",
+    "data": {
+      "DestinationX": 0.0,
+      "DestinationY": 0.0,
+      "DestinationZ": 0.0,
+      "DestinationSet": false,
+      "Side": "down",
+      "BiFaced": false,
+      "width": 3,
+      "height": 3
+    },
+    "count": 1
+  }
+}

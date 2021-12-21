@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "facing=down": { "model": "imm_ptl_surv_adapt:block/wrapping_zone_end" },
+    "facing=up": { "model": "imm_ptl_surv_adapt:block/wrapping_zone_end", "x": 180},
+    "facing=north": { "model": "imm_ptl_surv_adapt:block/wrapping_zone_end", "x":270},
+    "facing=south": { "model": "imm_ptl_surv_adapt:block/wrapping_zone_end", "x": 90},
+    "facing=west": { "model": "imm_ptl_surv_adapt:block/wrapping_zone_end", "x": 90, "y": 90},
+    "facing=east": { "model": "imm_ptl_surv_adapt:block/wrapping_zone_end", "x": 270, "y": 90}
+  }
+}
